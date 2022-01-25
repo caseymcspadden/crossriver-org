@@ -1,0 +1,731 @@
+{% extends "base.html" %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{{docroot}}/style/demos/default.css" type="text/css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+<link rel="stylesheet" href="style/leaflet/MarkerCluster.css" />
+<link rel="stylesheet" href="style/leaflet/MarkerCluster.Default.css" />
+{% endblock %}
+
+{% block headscript %}
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+   crossorigin=""></script>
+<script src="scripts/leaflet/leaflet.markercluster-src.js"></script>
+<script src="scripts/leaflet/spin.min.js"></script>
+<script src="scripts/leaflet/leaflet.spin.js"></script>
+<script src="{{docroot}}/scripts/CMUtility.js"></script>
+<script src="{{docroot}}/scripts/Astro.js"></script>
+<script src="{{docroot}}/scripts/Matrix.js"></script>
+<script src="{{docroot}}/scripts/CanvasHelper.js"></script>
+<script src="{{docroot}}/scripts/WorldMap.js"></script>
+<script src="{{docroot}}/scripts/SolarSystem.js"></script>
+<script src="{{docroot}}/scripts/Planetarium.js"></script>
+
+<script>
+
+$(function () { 
+	$("#page-images").addClass("CRHidden");
+	
+	$("#tabs").tabs({
+		beforeActivate: function(event, ui) {$(".uiDialog").dialog("close");}
+	});
+	
+	$(".date-picker").datepicker({
+		showButtonPanel: true
+	});
+		
+	$("#dialog-time").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'Time',
+	}); 
+	
+	$("#time-hour").spinner();
+	$("#time-minute").spinner();
+	$("#time-second").spinner();
+	$("#time-ampm").spinner();
+
+	$("#dialog-settings-map").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'Settings',
+		show: {effect: "blind", duration: 200},
+		position: {my:"right top", at:"right bottom", of:"#open-settings-map"},
+		hide: {effect: "blind", duration: 200},
+		//hide: {effect: "explode",duration: 1000}
+	}); 
+
+	$("#dialog-settings-solarsystem").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'Settings',
+		show: {effect: "blind", duration: 200},
+		position: {my:"right top", at:"right bottom", of:"#open-settings-solarsystem"},
+		hide: {effect: "blind", duration: 200},
+		//hide: {effect: "explode",duration: 1000}
+	}); 
+
+	$("#dialog-settings-sky").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'Settings',
+		show: {effect: "blind", duration: 200},
+		hide: {effect: "blind", duration: 200},
+		position: {my:"right top", at:"right bottom", of:"#open-settings-sky"}
+		//hide: {effect: "explode",duration: 1000}
+	});
+	
+	$("#dialog-settings-sightings").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'Settings',
+		show: {effect: "blind", duration: 200},
+		hide: {effect: "blind", duration: 200},
+		position: {my:"right top", at:"right bottom", of:"#open-settings-sightings"}
+		//hide: {effect: "explode",duration: 1000}
+	});
+	
+	$("#dialog-sky-location").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'My Location',
+		show: {effect: "blind", duration: 200},
+		hide: {effect: "blind", duration: 200},
+		position: {my:"left top", at:"left bottom", of:"#current-location-sky"}
+		//hide: {effect: "explode",duration: 1000}
+	});
+	
+	$("#dialog-search-sky").dialog({ 
+		autoOpen: false,
+		modal:false,
+		title: 'Search',
+		show: {effect: "blind", duration: 200},
+		hide: {effect: "blind", duration: 200},
+		position: {my:"right top", at:"right bottom", of:"#search-sky"}
+		//hide: {effect: "explode",duration: 1000}
+	});
+
+	$("#dialog-help").dialog({ 
+		autoOpen: false,
+		width: 500,
+		modal:false,
+		title: 'Help',
+		show: {effect: "blind", duration: 200},
+		hide: {effect: "blind", duration: 200}
+		//position: {my:"right top", at:"right bottom", of:"#search-sky"}
+		//hide: {effect: "explode",duration: 1000}
+	});
+});
+
+$(window).load(function () {
+	
+	$(".settings-icon").click(function(event) {
+		var dlg = $('#' + event.target.id.replace('open-', 'dialog-'));
+		//$(".uiDialog").dialog("close");
+		dlg.dialog(dlg.dialog("isOpen") ? "close" : "open");
+	});
+
+	$(".help-icon").click(function(event) {
+		var dlg = $('#dialog-help');
+		dlg.dialog("option","position",{my:"right top", at:"right bottom", of:event.target});
+		dlg.load("{{docroot}}/templates/"+event.target.id+".html");
+		dlg.dialog(dlg.dialog("isOpen") ? "close" : "open");
+	});
+	
+	var planets = {
+		"Sun" : {planet: new Sun(), color:"yellow", diameter:12, image: document.getElementById("planet-sun")},
+		"Moon" : {planet: new Moon(), color:"white", diameter:12, image: document.getElementById("planet-moon")},
+		"Mercury" : {planet: new Mercury(), color: "orange", diameter:6, image: document.getElementById("planet-mercury")}, 
+		"Venus" : {planet: new Venus(), color: "cyan", diameter:8, image: document.getElementById("planet-venus")},
+		"Earth" : {planet: new Earth(), color: "blue" , diameter:20, image: document.getElementById("planet-earth")},
+		"Mars" : {planet: new Mars(), color: "red" , diameter:8, image: document.getElementById("planet-mars")},
+		"Jupiter" : {planet: new Jupiter(), color: "violet" , diameter:8, image: document.getElementById("planet-jupiter")},
+		"Saturn" : {planet: new Saturn(), color: "green" , diameter:8, image: document.getElementById("planet-saturn")},
+		"Uranus" : {planet: new Uranus(), color: "brown" , diameter:4, image: document.getElementById("planet-uranus")},
+		"Neptune" : {planet: new Neptune(), color: "grey" , diameter:4, image: document.getElementById("planet-neptune")},
+		"Pluto" : {planet: new Pluto(), color: "black" , diameter:4, image: document.getElementById("planet-pluto")}
+	};
+		
+	var worldMap = new WorldMap("earthCanvas","earthImage","{{docroot}}/services/cities/", "locations",function(date) {$("#current-date-map").val(date.toLocaleDateString()); $("#current-time-map").val(date.toLocaleTimeString());});
+	
+	var addLocation = null;
+		
+	$("#current-date-map").click(function(event) {
+		$(".uiDialog").dialog("close");
+	});
+	
+	/*
+	$("#current-time-map").click(function(event) {		
+		var dlg = $("#dialog-time");
+		if (!dlg.dialog("isOpen"))
+		{
+			$(".uiDialog").dialog("close");
+			dlg.dialog("open");
+			dlg.dialog("widget").position({my:"left top", at:"left bottom", of:"#current-time-map"});
+		}
+	});
+	*/
+	
+	$("#current-date-map").on("change", function(event) {
+		worldMap.setLocalTime(new Date($("#current-date-map").val() + " " + $("#current-time-map").val()));
+	});
+
+	$("#current-time-map").on("change", function(event) {
+		worldMap.setLocalTime(new Date($("#current-date-map").val() + " " + $("#current-time-map").val()));
+	});
+
+	$("#animate-map").click(function(event) {
+		worldMap.setAnimate(!worldMap.animate);
+		$("#animate-map").attr("title",worldMap.animate ? "pause" : "animate"); 
+		$("#animate-map").toggleClass("ui-icon-play ui-icon-pause");
+	});
+	
+	$("#fixed-map").click(function(event) {
+		worldMap.setFixedMap(event.currentTarget.checked);
+	});
+	
+	$("#show-nightday-map").click(function(event) {
+		worldMap.showNightDay(event.currentTarget.checked);
+	});
+
+	$("#reset-time-map").click(function() {
+		worldMap.resetTime();
+	});
+	
+	var solarSystem = new SolarSystem("solarSystemCanvas", planets, function(date) {$("#current-date-solarsystem").val(date.toLocaleDateString());});
+
+	$( "#zoom-solarsystem" ).slider({
+      orientation: "horizontal",
+      min: 1,
+      max: 100,
+      slide: function( event, ui ) {
+      	solarSystem.setZoom(ui.value);
+      }
+    });
+
+	$("#current-date-solarsystem").on("change", function(event) {
+		solarSystem.setLocalTime(new Date($("#current-date-solarsystem").val()));
+	});
+	    
+	$("#animate-solarsystem").click(function(event) {
+		solarSystem.setAnimate(!solarSystem.animate);
+		$("#animate-solarsystem").toggleClass("ui-icon-play ui-icon-pause");
+	});
+	
+	$("#reset-time-solarsystem").click(function() {
+		solarSystem.resetTime();
+	});
+
+	$("#reset-orientation-solarsystem").click(function() {
+		solarSystem.resetOrientation();
+	});
+	
+	$("#center-solarsystem").on("change",function(event) {
+		solarSystem.setCenterObject($("#center-solarsystem option").filter(":selected").val());
+	});
+
+	var latitude=39;
+	var longitude=-94.5;
+	var utility = new CMUtility();
+	var cookie = utility.getCookie("mylocation");
+	if (cookie!=null)
+	{
+		var obj = $.parseJSON(cookie);
+		latitude = obj.lat;
+		longitude = obj.lon;
+		$("#current-location-sky").html(obj.name);
+	}
+
+	var planetariumOptions = {
+		starServer: "{{docroot}}/astronomy/stars",
+		constellationBoundariesServer: "{{docroot}}/astronomy/constellationboundaries",
+		constellationLimitsServer: "{{docroot}}/astronomy/constellationlimits",
+		constellationFiguresServer: "{{docroot}}/astronomy/constellationfigures",
+		constellationServer: "{{docroot}}/astronomy/constellations",
+		planets: planets,
+		latitude: 39,
+		longitude: -94.5,
+		showHorizon: true,
+		showRADec: true,
+		showEcliptic: true,
+		showStarNames: true,
+		showAltAz: false,
+		showConstellations: true,
+		showSatelliteNames: true
+	};
+
+	var planetarium = new Planetarium("skyCanvas", planetariumOptions, function(date){$("#current-date-sky").val(date.toLocaleDateString()); $("#current-time-sky").val(date.toLocaleTimeString());});
+	
+	var searchObject = {};
+	
+	$("#search-sky-go").click(function(event) {
+		planetarium.goTo(searchObject);
+	});
+
+	$("#search-sky").click(function(event) {
+		var dlg = $("#dialog-search-sky");
+		var isOpen = dlg.dialog("isOpen");
+		$(".uiDialog").dialog("close");
+		if (!isOpen)
+			dlg.dialog("open");
+	})
+
+	$("#current-location-sky").click(function() {
+		$("#location-name-sky").val("");
+		var dlg = $("#dialog-sky-location");
+		var isOpen = dlg.dialog("isOpen");
+		$(".uiDialog").dialog("close");
+		if (!isOpen)
+			dlg.dialog("open");
+	});
+
+	$("#current-date-sky").on("change", function(event) {
+		planetarium.setLocalTime(new Date($("#current-date-sky").val() + " " + $("#current-time-sky").val()));
+	});
+
+	$("#current-time-sky").on("change", function(event) {
+		planetarium.setLocalTime(new Date($("#current-date-sky").val() + " " + $("#current-time-sky").val()));
+	});
+
+	$("#animate-sky").click(function(event) {
+		planetarium.setAnimate(!planetarium.animate);
+		$("#animate-sky").toggleClass("ui-icon-play ui-icon-pause");
+	});
+
+	$("#show-horizon-sky").click(function(event) {
+		planetarium.showHorizon(event.currentTarget.checked);
+	});
+
+	$("#show-radec-sky").click(function(event) {
+		planetarium.showRADec(event.currentTarget.checked);
+	});
+
+	$("#show-ecliptic-sky").click(function(event) {
+		planetarium.showEcliptic(event.currentTarget.checked);
+	});
+
+	$("#show-altaz-sky").click(function(event) {
+		planetarium.showAltAz(event.currentTarget.checked);
+	});
+
+	$("#show-constellations-sky").click(function(event) {
+		planetarium.showConstellations(event.currentTarget.checked);
+	});
+
+	$("#show-starnames-sky").click(function(event) {
+		planetarium.showStarNames(event.currentTarget.checked);
+	});
+
+	$("#show-satellitenames-sky").click(function(event) {
+		planetarium.showSatelliteNames(event.currentTarget.checked);
+	});
+
+	$("#reset-time-sky").click(function() {
+		planetarium.resetTime();
+	});
+      	
+	$("#reset-orientation-sky").click(function() {
+		planetarium.resetOrientation();
+	});
+	
+	$( "#zoom-sky" ).slider({
+      orientation: "horizontal",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: function( event, ui ) {
+      	zoom = 1 + ui.value/10.0;
+      	planetarium.setZoom(zoom);
+      }
+    }).dblclick(function () {
+    	$( "#zoom-sky2" ).slider("value",0);
+      planetarium.setZoom(1);
+    });
+
+	$("#text-search-sky" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "{{docroot}}/astronomy/names",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+            response( $.map( data, function( item ) {
+              return {
+                label: item.name + " (" + (item.otype==1 ? "star" : "constellation") + ")",
+                value: item.name,
+                abbrev: item.abbrev,
+                hr: item.hr,
+                type: item.otype,
+                ra:item.ra,
+                dec:item.de
+              }
+            }));
+          }
+        });
+      },
+      minLength: 2,
+      delay:500,
+      select: function( event, ui ) {
+      	searchObject = ui.item;
+        //planetarium.goTo(ui.item.ra,ui.item.dec);
+        $("#search-coordinates").html("RA: " + Math.round(1000*ui.item.ra)/1000 + " DEC: " + Math.round(1000*ui.item.dec)/1000);
+      }
+    });
+    
+	
+	$("#location-name-map").autocomplete({
+		source: function (request, response) {
+			$.getJSON(
+				"{{docroot}}/services/citynames?term="+request.term,
+				function (data) {
+					response( $.map( data, function( item ) {
+						return {
+							id: item.geonameid,
+							label: item.fullname,
+							value: item.fullname
+						}
+					}))}
+				);
+			},
+			minLength: 3,
+			delay: 100,
+			select: function (event, ui) {
+				$("#location-name-map").val(ui.item.value);
+				addLocation = ui.item;
+				return false;
+			},
+	 });
+  
+	$("#add-location").click(function() {
+		if (addLocation!=null)
+		{
+			worldMap.addLocation(addLocation.id);
+			$("#location-name-map").val("");
+		}
+	});
+
+		$("#location-name-sky").autocomplete({
+			source: function (request, response) {
+					$.getJSON(
+						"{{docroot}}/services/citynames?term="+request.term,
+						function (data) {
+							response( $.map( data, function( item ) {
+              	return {
+              		id: item.geonameid,
+                	label: item.fullname,
+									value: item.fullname
+								}}))}
+					);
+			},
+			minLength: 3,
+			delay: 100,
+			width: 300,
+			select: function (event, ui) {
+				$("#location-name-sky").val(ui.item.value);
+				$.getJSON(
+					"{{docroot}}/services/cities/"+ui.item.id,
+					function (data) {
+						planetarium.setLocation(parseFloat(data.latitude),parseFloat(data.longitude));
+						$("#current-location-sky").html(ui.item.value);
+						utility.setCookie("mylocation",JSON.stringify({name:ui.item.value,lat:data.latitude,lon:data.longitude}),100);
+					}
+				);			
+				return false;
+			},
+	 });
+	 
+	var species = {
+		'1' : {icon: L.icon({iconUrl: 'images/demos/species-orca.png', iconSize: [64, 27], iconAnchor: [29, 14]}), markers: []},
+		'2' : {icon: L.icon({iconUrl:  'images/demos/species-graywhale.png', iconSize: [64, 17], iconAnchor: [31, 8]}), markers: []},
+		'3' : {icon: L.icon({iconUrl: 'images/demos/species-humpbackwhale.png', iconSize: [64, 24], iconAnchor: [31, 8]}), markers: []},
+		'4' : {icon: L.icon({iconUrl: 'images/demos/species-minkewhale.png', iconSize: [64, 17], iconAnchor: [30, 7]}), markers: []},
+		'5' : {icon: L.icon({iconUrl: 'images/demos/species-dallsporpoise.png', iconSize: [64, 25], iconAnchor: [30, 14]}), markers: []},
+		'6' : {icon: L.icon({iconUrl: 'images/demos/species-harborporpoise.png', iconSize: [64, 20], iconAnchor: [29, 11]}), markers: []},
+		'7' : {icon: L.icon({iconUrl: 'images/demos/species-pacificwhitesideddolphin.png', iconSize: [64, 28], iconAnchor: [30, 13]}), markers: []},
+		'8' : {icon: L.icon({iconUrl:  'images/demos/species-harborseal.png', iconSize: [64, 20], iconAnchor: [35, 11]}), markers: []},
+		'9' : {icon: L.icon({iconUrl:  'images/demos/species-californiasealion.png', iconSize: [64, 49], iconAnchor: [26, 31]}), markers: []},
+		'10' : {icon: L.icon({iconUrl:  'images/demos/species-stellersealion.png', iconSize: [64, 61], iconAnchor: [27, 33]}), markers: []},
+		'11' : {icon: L.icon({iconUrl:  'images/demos/species-riverotter.png', iconSize: [64, 58], iconAnchor: [35, 15]}), markers: []},
+		'12' : {icon: L.icon({iconUrl:  'images/demos/species-seaotter.png', iconSize: [64, 16], iconAnchor: [30, 9]}), markers: []}
+	}
+		
+	var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+		cloudmadeAttribution = 'Map data &copy; 2011 OpenStreetMap contributors, Imagery &copy; 2011 CloudMade, Points &copy 2012 LINZ',
+		cloudmade = L.tileLayer(cloudmadeUrl, {maxZoom: 18, attribution: cloudmadeAttribution}),
+		latlng = L.latLng(48, -123);
+		
+	var google = L.tileLayer("http://mt0.google.com/vt/x={x}&y={y}&z={z}",{maxZoom: 18, attribution: "&copy 2014 Google Maps"});
+	var osm = L.tileLayer("http://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom: 18, attribution: "&copy 2014 OpenStreetMaps"});
+
+	var sightingsMap = L.map('sightings-map', {center: latlng, zoom: 5, zoomControl: false, layers: [google]});		 
+
+	$("#zoom-sightings" ).slider({
+      orientation: "horizontal",
+      min: 1,
+      max: 18,
+      value: 5,
+      slide: function( event, ui ) {
+      	sightingsMap.setZoom(ui.value);
+      }
+    });
+    
+
+	L.control.scale().addTo(sightingsMap);
+	var markers = L.markerClusterGroup();    
+    
+	function load_sightings()
+	{
+			markers.clearLayers();
+			$.each(species, function(k, v) {
+				v.markers.length=0;
+			});
+
+			sightingsMap.spin(true);
+        
+			$.ajax({
+				dataType: "json",
+				url: "{{docroot}}/public/sightings",
+				success: function(data) {
+					$.each(data, function(index, sighting) {
+						var html = 'Species: ' + sighting.species + '<br>' + sighting.user_comments + '<br>' + 'Quantity: ' +  (sighting.number||'unknown') + '<br>' + 'Sighted at: ' +  sighting.sighted_at + '<br>' + sighting.latitude + ' ' + sighting.longitude;
+						var marker = L.marker(new L.LatLng(sighting.latitude, sighting.longitude), { title: sighting.species, icon:species[sighting.idspecies].icon });
+						marker.bindPopup(html);
+						species[sighting.idspecies].markers.push(marker);
+					});
+					$.each(species, function(k, v) {
+						markers.addLayers(v.markers);
+					});
+					sightingsMap.spin(false);
+					sightingsMap.addLayer(markers);	
+					sightingsMap.fitBounds(markers.getBounds());
+				}
+			});
+	}    
+	
+	$("#fit-sightings").click(function() {
+		sightingsMap.fitBounds(markers.getBounds());
+	});
+
+	sightingsMap.on('zoomend', function(e) {
+		$("#zoom-sightings" ).slider("option","value",e.target.getZoom());
+	});
+		
+	markers.on('clusterclick', function (a) {
+		a.layer.zoomToBounds();
+	});
+	
+	$(".show-species").click(function(e) {
+		markers.clearLayers();
+		$(".show-species").each(function(i,item) {
+			if (item.checked)
+			{
+				var idspecies = item.id.replace('show-species-', '');
+				markers.addLayers(species[idspecies].markers);
+			}
+		});
+	});
+	
+	$(".show-sightings-date").click(function(e) {
+			$('#' + e.target.id.replace('-checkbox','-date')).toggleClass('CRHidden');
+	});
+	
+	load_sightings();
+});
+
+</script>
+{% endblock %}
+
+{% block body %}
+<p>
+These demos showcase some of the technologies and development expertise we're able to bring to our clients. Click "?" for details.
+</p>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-sightings">Marine Mammal Sightings</a></li>
+    <li><a href="#tabs-map">World Clock</a></li>
+    <li><a href="#tabs-solarsystem">Solar System</a></li>
+    <li><a href="#tabs-sky">Planetarium</a></li>
+  </ul>
+  <div id="tabs-map">
+  	<div style="height:30px;">
+		<div class="CRFloatLeft ui-state-default">
+		  <span id="animate-map" class="ui-icon ui-icon-play CRControlIcon" title="animate"></span>
+		  <span id="reset-time-map" class="ui-icon ui-icon-seek-first CRControlIcon" title="reset to current time"></span>
+		  <input type="text" id="current-date-map" class='date-picker' size="10"></input>
+		  <input type="text" id="current-time-map" size="11"></input>
+		</div>
+		<div class="CRFloatRight">
+		  <img src="./images/icon-menu.png" id="open-settings-map" class="settings-icon" width="20" height="20" alt="Menu" style="vertical-align:middle"/>
+			<img src="./images/icon-help.png" id="help-map" class="help-icon" width="20" height="20" alt="Help" style="vertical-align:middle"/>
+		</div>
+  	</div>
+	<canvas id="earthCanvas" width="956" height="478"></canvas>
+
+
+  </div> <!-- <div id="tabs-map" -->
+  
+  <div id="tabs-solarsystem">
+  	<div style="height:30px;">
+ 		<div class="CRFloatLeft ui-state-default" style="vertical-align:middle">
+		  <span id="animate-solarsystem" class="ui-icon ui-icon-play CRControlIcon" title="animate"></span>
+		  <span id="reset-time-solarsystem" class="ui-icon ui-icon-seek-first CRControlIcon" title="reset to current time"></span>
+		  <span id="reset-orientation-solarsystem" class="ui-icon ui-icon-refresh CRControlIcon" title="reset orientation"></span>
+		  <div id="zoom-solarsystem" class="demos" title="zoom" style="width:200px;display:inline-block;margin-left:20px;margin-right:20px;vertical-align:middle;"></div>
+		  <input type="text" id="current-date-solarsystem" class='date-picker' size="11" style="margin-right:20px;"></input>
+		</div>
+		<div class="CRFloatRight">
+			<img src="./images/icon-menu.png" id="open-settings-solarsystem" class="settings-icon" width="20" height="20" alt="Menu" style="vertical-align:middle"/>
+			<img src="./images/icon-help.png" id="help-solarsystem" class="help-icon" width="20" height="20" alt="Help" style="vertical-align:middle"/>
+		</div>
+  	</div>
+  	<div class="demo">
+  		<div class="CRFloatLeft">
+	  		<canvas id="solarSystemCanvas" width="956" height="478"></canvas>
+	  	</div>
+  	</div>
+  </div> <!-- <div id="tabs-solarsystem" -->
+  
+  <div id="tabs-sky">
+  	<div style="height:30px;">
+	 	<div class="CRFloatLeft ui-state-default">
+		  <span id="animate-sky" class="ui-icon ui-icon-play CRControlIcon" title="animate"></span>
+		  <span id="reset-time-sky" class="ui-icon ui-icon-seek-first CRControlIcon" title="reset to current time"></span>
+		  <span id="reset-orientation-sky" class="ui-icon ui-icon-refresh CRControlIcon" title="reset orientation"></span>
+		  <div id="zoom-sky" class="demos" title="zoom" style="width:200px;display:inline-block;margin-left:20px;margin-right:20px;vertical-align:middle;"></div>
+			<input type="text" id="current-date-sky" class='date-picker' size="10"></input><input type="text" id="current-time-sky" size="11"></input>
+			<span id="current-location-sky" style="font-size:12px;margin-left:5px;margin-right:20px;cursor:pointer;" title="set location">Click here to set a location</span>
+		</div>
+		<div class="CRFloatRight">
+		<img src="./images/icon-search.png" id="search-sky" width="20" height="20" alt="Search" style="vertical-align:middle"/>
+		<img src="./images/icon-menu.png" id="open-settings-sky" class="settings-icon" width="20" height="20" alt="Menu" style="vertical-align:middle"/>
+		<img src="./images/icon-help.png" id="help-sky" class="help-icon" width="20" height="20" alt="Help" style="vertical-align:middle"/>
+		</div>
+  	</div>
+  	<div class="demo">
+  		<div class="CRFloatLeft">
+  			<canvas id="skyCanvas" width="956" height="478"></canvas>
+  		</div>
+  	</div>
+  </div>  <!-- <div id="tabs-sky" -->
+  
+  <div id="tabs-sightings">
+  	<div style="height:30px;">
+	 	<div class="CRFloatLeft ui-state-default">
+		  <span id="fit-sightings" class="ui-icon ui-icon-refresh CRControlIcon" title="fit all sightings"></span>
+		  <div id="zoom-sightings" class="demos" title="zoom" style="width:200px;display:inline-block;margin-left:20px;margin-right:20px;vertical-align:middle;"></div>
+		</div>
+		<div class="CRFloatRight">
+		<img src="./images/icon-search.png" id="search-sightings" width="20" height="20" alt="Search" style="vertical-align:middle"/>
+		<img src="./images/icon-menu.png" id="open-settings-sightings" class="settings-icon" width="20" height="20" alt="Menu" style="vertical-align:middle"/>
+		<img src="./images/icon-help.png" id="help-sightings" class="help-icon" width="20" height="20" alt="Help" style="vertical-align:middle"/>
+		</div>
+  	</div>
+  	<div class="demo">
+  	<div style="width:956px;height:478px;" id="sightings-map"></div>
+  	</div>
+  </div>  <!-- <div id="tabs-sightings" -->
+
+</div>
+
+<div id="dialog-time" class="uiDialog">
+<input id="time-hour" name="time-hour" style="width:25px;"> : 
+<input id="time-minute" name="time-minute" style="width:25px;"> : 
+<input id="time-second" name="time-second" style="width:25px;"> : 
+<input id="time-ampm" name="time-ampm" style="width:25px;">
+</div>
+
+<div id="dialog-settings-map" class="uiDialog">
+<p><input type="checkbox" id="fixed-map" checked/>Stationary Map</p>
+<p><input type="checkbox" id="show-nightday-map" checked/>Show Night/Day</p>
+<p>Add a location:<br>
+<input type="text" id="location-name-map"/><button id="add-location">add</button></p>
+</div>
+
+<div id="dialog-settings-solarsystem" class="uiDialog">
+<p>Center on
+	<select id="center-solarsystem">
+			  <option name="Sun">Sun</option>
+			  <option name="Mercury">Mercury</option>
+			  <option name="Venus">Venus</option>
+			  <option name="Earth">Earth</option>
+			  <option name="Mars">Mars</option>
+			  <option name="Jupiter">Jupiter</option>
+			  <option name="Saturn">Saturn</option>
+			  <option name="Uranus">Uranus</option>
+			  <option name="Neptune">Neptune</option>
+			  <option name="Pluto">Pluto</option>
+	</select>
+</p>
+</div>
+
+<div id="dialog-search-sky" class="uiDialog">
+<p>Object name or coordinates (ra dec)<br>
+<p><input id="text-search-sky"/><button id="search-sky-go">search</button></p>
+<div id="search-coordinates"></div>
+</div>
+
+<div id="dialog-settings-sky" class="uiDialog">
+<p><input type="checkbox" id="show-horizon-sky" checked/>Show Horizon</p>
+<p><input type="checkbox" id="show-radec-sky" checked/>Show RA and Declination</p>
+<p><input type="checkbox" id="show-ecliptic-sky" checked/>Show Ecliptic</p>
+<p><input type="checkbox" id="show-altaz-sky"/>Show Altitude and Azimuth</p>
+<p><input type="checkbox" id="show-constellations-sky" checked/>Show Constellation when clicked</p>
+<p><input type="checkbox" id="show-starnames-sky" checked/>Show Star Names</p>
+<p><input type="checkbox" id="show-satellitenames-sky" checked/>Show Satellite Names</p>
+</div>
+
+<div id="dialog-sky-location" class="uiDialog">
+<p>My location:<br>
+<input type="text" id="location-name-sky"/></p>
+</div>
+
+<div id="dialog-settings-sightings" class="uiDialog">
+<p>Show Species:</p>
+<p>
+<input type="checkbox" id="show-species-1" class="show-species" checked/>Orca<br/>
+<input type="checkbox" id="show-species-2" class="show-species" checked/>Gray Whale<br/>
+<input type="checkbox" id="show-species-3" class="show-species" checked/>Humpback Whale<br/>
+<input type="checkbox" id="show-species-4" class="show-species" checked/>Minke Whale<br/>
+<input type="checkbox" id="show-species-5" class="show-species" checked/>Dall's Porpoise<br/>
+<input type="checkbox" id="show-species-6" class="show-species" checked/>Harbor Porpoise<br/>
+<input type="checkbox" id="show-species-7" class="show-species" checked/>Pacific White-sided Dolphin<br/>
+<input type="checkbox" id="show-species-8" class="show-species" checked/>Harbor Seal<br/>
+<input type="checkbox" id="show-species-9" class="show-species" checked/>California Sea Lion<br/>
+<input type="checkbox" id="show-species-10" class="show-species" checked/>Steller Sea Lion<br/>
+<input type="checkbox" id="show-species-11" class="show-species" checked/>River Otter<br/>
+<input type="checkbox" id="show-species-12" class="show-species" checked/>Sea Otter
+</p>
+<!--
+<table><tbody>
+<tr><td><input type="checkbox" id="show-sightings-from-checkbox" class="show-sightings-date"/>From date</td><td><input type="text" id="show-sightings-from-date" class="CRHidden date-picker" /></td></tr>
+<tr><td><input type="checkbox" id="show-sightings-to-checkbox"  class="show-sightings-date"/>To date</td><td><input type="text" id="show-sightings-to-date" class="CRHidden date-picker" /></td></tr>
+</tbody></table>
+-->
+</div>
+
+<div id="page-images">
+		<img id="earthImage" src="./images/earth-map-1000x500.gif" alt="Earth Map"/> 	
+		<img id="planet-sun" src="./images/planet-sun.gif" alt="Planet"/>
+		<img id="planet-moon" src="./images/planet-moon.gif" alt="Planet"/>
+		<img id="planet-mercury" src="./images/planet-mercury.gif" alt="Planet"/>
+		<img id="planet-venus" src="./images/planet-venus.gif" alt="Planet"/>
+		<img id="planet-earth" src="./images/planet-earth.gif" alt="Planet"/>
+		<img id="planet-mars" src="./images/planet-mars.gif" alt="Planet"/>
+		<img id="planet-jupiter" src="./images/planet-jupiter.gif" alt="Planet"/>
+		<img id="planet-saturn" src="./images/planet-saturn.gif" alt="Planet"/>
+		<img id="planet-uranus" src="./images/planet-uranus.gif" alt="Planet"/>
+		<img id="planet-neptune" src="./images/planet-neptune.gif" alt="Planet"/>
+		<img id="planet-pluto" src="./images/planet-pluto.gif" alt="Planet"/>
+</div>
+
+<div id="dialog-help" class="uiDialog">
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'The Nanotech Company, LLC' %}
+
+{% block projectbody %}
+
+<img src = '{{docroot}}/images/nano_overview.gif' style='float:right;margin-left:20px;'> 
+<p>The Nanotech Company, LLC launched the website nanotechnology.com in late 2005 and it grew into one of the premier online destinations
+for nanotechnology investors, students and scientists.</p>
+<p>Cross River Software teamed with design firm indego:MEDIA to
+engineer every aspect of the site. Features included a self-populating patent database, an event calendar, an employment module, streaming multimedia, stock charts and blogs.</p> 
+<img src = '{{docroot}}/images/nano_stocks.gif' style='float:left;margin-right:20px;'> 
+<p>The site was designed to serve a diverse membership base, from serious nanotechnology investors to research scientists. The website was designed as a nanotechnology "portal" that aggregated data from a variety of sources such as financial services, patent databases and RSS news feeds. The site featured a custom-built blog interface and storefront for purchasing site subscriptions, books, papers and nano-related merchandise.</p>
+
+<div id="dialog-technical">
+<p>The website featured a MySQL/PHP server and a JavaScript-intensive client that pulled information from a variety of data sources using RSS, HTML "scraping" and other techniques. Among its many capabilities, the server was able to generate a variety of custom-designed financial charts as jpeg images.</p>
+</div>
+{% endblock %}

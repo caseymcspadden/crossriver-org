@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+
+{% block style %}
+<style>
+
+#users table, #clients table {
+	width: 100%;
+}
+
+</style>
+{% endblock %}
+
+{% block headscript %}
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+$(function () { 
+	var open_users_dialog = function(id)
+	{
+		if (id!=0)
+		{
+			var data = $.data(document.body,"users");
+			var user = data[id];
+						
+			for (field in user)
+				if (field=='idclient')
+					$("#user_form select[name="+field+"]").val(user[field]);
+				else
+					$("#user_form input[name="+field+"]").val(user[field]);
+		}
+		else
+			$('#user_form input[name="id"]').val(0);
+		
+		$("#dialog").dialog("open");
+	}
+		
+	var submit_users_form = function()
+	{
+		var id = $('#user_form input[name="id"]').val();
+		$('#user_form input[name="_METHOD"]').val(id==0 ? "POST" : "PUT");
+	
+		$.ajax({
+			type: "POST",
+			url: "{{docroot}}/services/users/" + (id==0 ? "" : id),
+			data: $("#user_form").serialize(),
+			dataType: "json",
+			success: function (data) {$("#dialog").dialog( "close" ); refresh_users();},
+			error: function() {console.log("ERROR");}
+		});
+	}
+	
+	var refresh_users = function()
+	{		
+		$.get("{{docroot}}/services/users",
+    	function( json )  {
+    		var data = {};
+    		var html = "";
+			$.each(json, function(i,e) {
+				data[e.id] = e;
+	        	html += '<tr id="user_' + e.id + '">' +
+        	        '<td>' + e.name + '</td>' +
+        	        '<td>' + e.clientname + '</td>' +
+        	        '<td>' + e.username + '</td>' +
+        	        '<td>' + e.email + '</td>' +
+        	        '<td>' + e.admin + '</td>' +
+        	        '</tr>';
+			});
+ 
+     	$.data(document.body, "users", data)
+
+	 		$("#users tbody" ).html(html);
+        
+	 		$('#users tr').click(function (e) {
+	 			var id = $(this).attr("id").substr(5); // e.g. user_id
+	 			open_users_dialog(id);
+	 			//var data = $.data(document.body,"users");
+        		//console.log(data[id]);
+			});
+		});
+	}
+	
+	var refresh_clients = function()
+	{		
+		$.get("{{docroot}}/services/clients",
+    	function( json )  {
+    		var data = {};
+    		var html = "";
+    		var options = "";
+			$.each(json, function(i,e) {
+				data[e.id] = e;
+	        	html += '<tr id="client_' + e.id + '">' +
+        	        '<td>' + e.name + '</td>' +
+        	        '</tr>';
+        	  options += "<option value='" + e.id + "'>" + e.name + "</option>";
+			});
+ 
+     	$.data(document.body, "clients", data);
+
+	 		$("#clients tbody" ).html(html);
+	 		$("#user_form select[name=idclient]").html(options);
+        
+	 		$('#clients tr').click(function (e) {
+	 			var id = $(this).attr("id").substr(7); // e.g. user_id
+	 			console.log(id);
+			});
+		});
+	}
+
+	$("#newuser").click(function(event) {open_users_dialog(0);});
+
+	$("#tabs").tabs();
+	
+	$("#dialog").dialog({ 
+		autoOpen: false,
+		modal: true,
+		width: 600,
+		buttons: [ { text: "Submit", click: submit_users_form }, { text: "Cancel", click: function() { $( this ).dialog( "close" )}}]
+		});
+	
+	refresh_clients();
+	refresh_users();
+});
+</script>
+
+{% endblock %}
+
+{% block body %}
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tab-users">Users</a></li>
+    <li><a href="#tab-blog">Blog</a></li>
+    <li><a href="#tab-3">Admin 3</a></li>
+  </ul>
+  <div id="tab-users">
+ 
+  <div id="users">
+  <div><button id="newuser">new user</button></div>
+  <table><thead><tr><th>Name</th><th>Client</th><th>UserName</th><th>Email</th><th>Admin</th></tr></thead>
+  <tbody></tbody>
+  </table>
+  </div>
+
+  <div id="clients" style='margin-top:20px'>
+  <div><button id="newclient">new client</button></div>
+  <table><thead><tr><th>Name</th></tr></thead>
+  <tbody></tbody>
+  </table>
+  </div>
+  
+  </div>
+  <div id="tab-blog">
+		<textarea class="ckeditor" id="editor" name="editor" cols="80" rows="10"></textarea>
+	</div>
+  <div id="tab-3">
+</div>
+<div id="dialog">
+<form name="user_form" id="user_form">
+<input type="hidden" name="id" value="0">
+<input type="hidden" name="_METHOD" value="PUT">
+<table>
+<tbody>
+<tr><td>Name</td><td><input type="text" name="name"/></td></tr>
+<tr><td>User Name</td><td><input type="text" name="username"/></td></tr>
+<tr><td>Email</td><td><input type="text" name="email"/></td></tr>
+<tr><td>Client</td><td><select name="idclient"></select></td></tr>
+<tr><td>Password</td><td><input type="password" name="password"/></td></tr>
+<tr><td>Repeat Password</td><td><input type="password" name="repeat_password"/></td></tr>
+</tbody></table>
+</form>
+</div>
+{% endblock %}

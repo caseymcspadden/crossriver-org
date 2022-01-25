@@ -1,0 +1,73 @@
+/* dGrid styling */
+
+div.CRPastDue {
+	background-color: #ff9999 !important; 
+}
+
+div.CRAlertDue {
+	background-color: #ffcccc !important;
+}
+
+div.CRSigedOff {
+	background-color: #99ff99 !important;
+}
+
+div.CRClosed {
+	background-color: #cccccc !important;
+}
+
+div.CRFlagged {
+	background-color:	#ffff99 !important;
+}
+
+div.CRAttention {
+	background-color:	#bbbbff !important;
+}
+
+
+.dgrid.grid {
+	width: 1000px;
+	/* height: 600px; */
+	/* margin: 10px; */
+	cursor: pointer;
+}
+
+.grid .dgrid-cell {
+	width: 80px;
+}
+
+.grid .dgrid-column-set-cell {
+			width: 30%;
+}
+
+.grid .dgrid-cell.plans-field-doc_count {width: 60px;}
+.grid .dgrid-cell.plans-field-plan {width: 150px;}
+.grid .dgrid-cell.plans-field-type {width: 60px;}
+.grid .dgrid-cell.plans-field-due_date {width: 120px;}
+.grid .dgrid-cell.plans-field-office_due {width: 120px;}
+.grid .dgrid-cell.plans-field-idadvisor {width: 120px;}
+.grid .dgrid-cell.plans-field-idemployee {width: 120px;}
+.grid .dgrid-cell.plans-field-last_touched_by {width: 100px;}
+.grid .dgrid-cell.plans-field-data_request {width: 120px;}
+.grid .dgrid-cell.plans-field-data_received {width: 120px;}
+.grid .dgrid-cell.plans-field-data_sent {width: 120px;}
+.grid .dgrid-cell.plans-field-lastpreparercomments {width: 120px;}
+
+.grid .dgrid-cell.advisor-field-plan {width: 150px;}
+.grid .dgrid-cell.advisor-field-due_date {width: 120px;}
+.grid .dgrid-cell.advisor-field-office_due {width: 120px;}
+.grid .dgrid-cell.advisor-field-idadvisor {width: 120px;}
+.grid .dgrid-cell.advisor-field-idemployee {width: 120px;}
+.grid .dgrid-cell.advisor-field-last_touched_by {width: 100px;}
+.grid .dgrid-cell.advisor-field-data_request {width: 120px;}
+.grid .dgrid-cell.advisor-field-data_received {width: 120px;}
+.grid .dgrid-cell.advisor-field-data_sent {width: 120px;}
+.grid .dgrid-cell.advisor-field-lastadvisorcomments {width: 150px;}
+
+.grid .dgrid-cell.preparer-field-plan {width: 150px;}
+.grid .dgrid-cell.preparer-field-due_date {width: 120px;}
+.grid .dgrid-cell.preparer-field-office_due {width: 120px;}
+.grid .dgrid-cell.preparer-field-idadvisor {width: 120px;}
+.grid .dgrid-cell.preparer-field-last_touched_by {width: 100px;}
+.grid .dgrid-cell.preparer-field-data_sent {width: 120px;}
+.grid .dgrid-cell.preparer-field-lastpreparercomments {width: 150px;}

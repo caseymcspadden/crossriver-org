@@ -1,0 +1,21 @@
+{% if user.isLoggedIn() %}
+
+{% if user.isAdmin() %}
+	{{user.getName()}} <a href="{{docroot}}/admin">admin</a> 
+{% else %}
+	<a href="{{docroot}}/clients">{{user.getName()}}</a> 
+{% endif %}
+
+<a href="{{docroot}}/?logout=1">logout</a>
+{% else %}
+
+<div class="CRLogin">
+<form name="login" id="login" action="{{docroot}}/login" method="POST">
+<input type="hidden" name="login" value="1">
+Client Login: <input type="text" name="username" size="10"/>&nbsp;
+Password: <input type="password" name="password" size="10"/>
+<button type="submit" value="Submit"/>
+</form>
+</div>
+
+{% endif %}

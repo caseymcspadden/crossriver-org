@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{docroot}}/style/projects/default.css" type="text/css">
+{% endblock %}
+
+{% block headscript %}
+<script>
+$(function () {
+	$("#dialog-technical").dialog({ 
+		autoOpen: false,
+		modal: false,
+		title: 'Technical Details',
+		position: {my:"right top", at:"right bottom", of:"#technical-details"}
+	});
+	
+	$("#technical-details").click(function(event) {
+		$("#dialog-technical").dialog("open");
+		return false;
+	});
+});
+
+</script>
+{% endblock %}
+
+{% block body %}
+
+<div class="CRBodyTitle"><span class="main-title">project abstract: {{project_name}}</span><a class="CRFloatRight" id="technical-details" href="">[technical details]</a></div>
+
+<div class="CRProjectBody">
+{% block projectbody %}
+PROJECT BODY
+{% endblock %}
+</div>
+
+<div style="clear:both;"></div>
+
+{% endblock %}

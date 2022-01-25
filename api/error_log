@@ -1,0 +1,1 @@
+[06-Aug-2018 14:51:25 America/Denver] PHP Parse error:  syntax error, unexpected 'class' (T_CLASS), expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$' in /home8/crossri2/public_html/vendor/slim/slim/Slim/Container.php on line 149

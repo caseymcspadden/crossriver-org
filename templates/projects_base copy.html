@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block style %}
+<link rel="stylesheet" href="{{docroot}}/style/projects/default.css" type="text/css">
+{% endblock %}
+
+{% block headscript %}
+{% endblock %}
+
+{% block body %}
+
+<div style="width:100px;float:left;">
+LEFT PANEL
+</div>
+<div style="width:900px;float:left;">
+
+<div class="CRBodyTitle"><h1>Project Thumbnail: {{project_name}}</h1></div>
+
+{% block projectbody %}
+PROJECT BODY
+{% endblock %}
+</div>
+
+<div style="clear:both;"></div>
+
+
+{% endblock %}
+
+{% block bodyscript %}
+ <script>
+        // Require dependencies
+        require([
+            "dojo/parser",
+            "dijit/Menu",
+            "dijit/MenuItem",
+            "dijit/MenuBar",
+            "dijit/MenuBarItem",
+            "dijit/PopupMenuBarItem",
+            "dojo/domReady!"
+        ], function(parser){
+            parser.parse();
+        });
+</script>
+{% endblock %}

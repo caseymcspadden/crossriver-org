@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block headscript %}
+<script src="{{docroot}}/scripts/Astro.js"></script>
+
+<script>
+$(window).load(function () { 
+
+	var c=document.getElementById("earthCanvas");
+	var ctx=c.getContext("2d");
+	var img=document.getElementById("earthImage");
+	//ctx.drawImage(img,0,0);
+	
+	
+	
+	
+	//context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+		
+	var astro = new Astro();
+	
+	var utc = astro.getUTC();
+	$("#utc").html(utc.toString());
+	
+	var d = astro.date_to_day(utc);
+	
+	var lst = astro.local_sidereal_time(d,0);
+	var hms = astro.deg_to_hms(lst);
+	
+	$("#mst").html(hms.h + " " + hms.m + " " + hms.s);
+	
+	var sun = new Sun();
+	var rads = sun.GetRAandDec(d);
+	
+	var ra = astro.deg_to_hms(rads.ra);
+	var dec = astro.deg_to_dms(rads.dec);
+	ctx.strokeStyle="#000000";
+	
+	ctx.beginPath();
+	ctx.moveTo(0,250);
+	ctx.lineTo(1000,250);
+	ctx.stroke();
+	
+	var moon = new Moon();
+	var radm = moon.GetRAandDec(d,false,0,0);
+
+	ra = astro.deg_to_hms(radm.ra);
+	dec = astro.deg_to_dms(radm.dec);
+	
+	var meridian = astro.mod180(rads.ra-lst);
+	var lmoon = astro.mod180(radm.ra-lst);
+	
+	var center = Math.round(meridian);
+	
+	if (meridian>=0)
+	{
+		var pixelLeft = Math.round(1000*meridian/360);
+
+		console.log(pixelLeft);
+		ctx.drawImage(img,pixelLeft,0,1000-pixelLeft,500,0,0,1000-pixelLeft,500);
+		ctx.drawImage(img,0,0,pixelLeft,500,1000-pixelLeft,0,pixelLeft,500);
+		
+		
+	}
+	
+	
+	//ctx.drawImage(img,500,0,500,500,0,0,500,500);
+	//ctx.drawImage(img,0,0,500,500,500,0,500,500);
+	
+	ctx.strokeStyle="#FFFF00";
+	ctx.fillStyle="#FFFF00";
+	
+	ctx.beginPath();
+	ctx.moveTo(500 + 500*(meridian/180),0);
+	ctx.lineTo(500 + 500*(meridian/180),500);
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.arc(500 + 500*(meridian/180), 250 - 250*(rads.dec/90), 10, 0, 2*Math.PI);
+	ctx.fill();	
+		
+	ctx.strokeStyle="#FFFFFF";
+	ctx.fillStyle="#FFFFFF";
+
+	ctx.beginPath();
+	ctx.moveTo(500 + 500*(lmoon/180),0);
+	ctx.lineTo(500 + 500*(lmoon/180),500);
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.arc(500 + 500*(lmoon/180), 250 - 250*(radm.dec/90), 10, 0, 2*Math.PI);
+	ctx.fill();	
+	
+	var decsun = Math.abs(rads.dec); 
+	var height = Math.round((decsun/90.0)*250);
+	
+	ctx.globalAlpha = 0.6;
+	ctx.fillStyle="#000000";
+
+	var tandec = astro.tand(-rads.dec);
+	
+	for (var i=0; i<1000 ; i+=2)
+	{
+		var lon = -180 + 360.0*(i/1000.0);
+		var delta = meridian - lon;
+		var lat = astro.atand(astro.cosd(delta)/tandec);
+		if (rads.dec>0)
+			ctx.fillRect(i, 250 - 250*(lat/90), 2, 250 + 250*(lat/90));
+		else
+			ctx.fillRect(i, 0, 2, 250 - 250*(lat/90));
+	}		
+});
+</script>
+{% endblock %}
+
+{% block body %}
+<div id="utc"></div>
+<div id="mst"></div>
+
+<canvas id="earthCanvas" width="1000" height="500">
+</canvas>
+
+<div class="CRHidden">
+<img id="earthImage" src="./images/earth-map-1000x500.gif" alt="Earth Map"/> 	
+</div>
+
+
+{% endblock %}

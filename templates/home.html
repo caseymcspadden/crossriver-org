@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block style %}
+<style>
+
+a {   
+    -moz-box-sizing: border-box;   
+    -webkit-box-sizing: border-box;   
+    box-sizing: border-box;
+}
+
+#home-accordion .ui-accordion-content {
+	border: 0;
+	padding: 0;
+	font-size: 14pt;
+	color: #666;
+	background-color: #ffffff;
+}
+
+#home-accordion .ui-accordion-content a {
+	color: #666;
+}
+
+#home-accordion .ui-accordion-content a:hover {
+  color: #f05c23;
+}
+
+#home-accordion .ui-accordion-header {  
+    margin: 0px;
+    background-image: none;
+    padding:0;
+    border: 0;
+    border-radius: 0;
+}  
+
+#home-accordion .ui-accordion-header a {  
+    color: #fff;  
+    line-height: 40px;  
+    display: block;  
+    font-size: 14pt;  
+    width: 100%;  
+    text-indent: 30px;
+    border: 0;
+}  
+
+#home-accordion .ui-accordion-header:first-of-type {  
+    background-image: url("{{docroot}}/images/background/homepage-image.jpg");
+    background-position: 0px 0px;
+}  
+
+#home-accordion .ui-accordion-header:nth-of-type(2) {  
+    background-image: url("{{docroot}}/images/background/homepage-image.jpg");
+    background-position: 0px -50px;
+}  
+#home-accordion .ui-accordion-header:nth-of-type(3) {  
+    background-image: url("{{docroot}}/images/background/homepage-image.jpg");
+    background-position: 0px -100px;
+}  
+#home-accordion .ui-accordion-header:nth-of-type(4) {  
+    background-image: url("{{docroot}}/images/background/homepage-image.jpg");
+    background-position: 0px -150px;
+}
+#home-accordion .ui-accordion-header:nth-of-type(5) {  
+    background-image: url("{{docroot}}/images/background/homepage-image.jpg");
+    background-position: 0px -200px;
+}  
+#home-accordion .ui-accordion-header:last-of-type {  
+    background-image: url("{{docroot}}/images/background/homepage-image.jpg");
+    background-position: 0px -250px;
+}
+#home-accordion .ui-accordion-header a {  
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);  
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2);  
+    border-right: 1px solid rgba(0, 0, 0, .2);  
+    border-left: 1px solid rgba(0, 0, 0, .2);  
+    border-bottom: 1px solid rgba(0, 0, 0, .2);  
+    border-top: 1px solid rgba(250, 250, 250, .2);  
+}
+</style>
+{% endblock %}
+
+{% block headscript %}
+<script>
+$(function () { 
+    var icons = {
+      header: "ui-icon-triangle-1-e",
+      activeHeader: "ui-icon-triangle-1-s"
+    };
+
+		$("#home-accordion").removeClass("CRHidden");
+
+    $("#home-accordion").accordion({
+    	icons:icons,
+    	event: "click hoverintent",
+    	heightStyle: "fill",
+    	collapsible:false,
+    	animate: 500,
+    	active:5
+    });
+
+		$('[title]').tooltip({position:{my:"center top", at:"center bottom"}});
+});
+		
+$.event.special.hoverintent = {
+    setup: function() {
+      $( this ).bind( "mouseover", jQuery.event.special.hoverintent.handler );
+    },
+    teardown: function() {
+      $( this ).unbind( "mouseover", jQuery.event.special.hoverintent.handler );
+    },
+    handler: function( event ) {
+      var currentX, currentY, timeout,
+        args = arguments,
+        target = $( event.target ),
+        previousX = event.pageX,
+        previousY = event.pageY;
+ 
+      function track( event ) {
+        currentX = event.pageX;
+        currentY = event.pageY;
+      };
+ 
+      function clear() {
+        target
+          .unbind( "mousemove", track )
+          .unbind( "mouseout", clear );
+        clearTimeout( timeout );
+      }
+ 
+      function handler() {
+        var prop,
+          orig = event;
+ 
+        if ( ( Math.abs( previousX - currentX ) +
+            Math.abs( previousY - currentY ) ) < 7 ) {
+          clear();
+ 
+          event = $.Event( "hoverintent" );
+          for ( prop in orig ) {
+            if ( !( prop in event ) ) {
+              event[ prop ] = orig[ prop ];
+            }
+          }
+          // Prevent accessing the original event since the new event
+          // is fired asynchronously and the old event is no longer
+          // usable (#6028)
+          delete event.originalEvent;
+ 
+          target.trigger( event );
+        } else {
+          previousX = currentX;
+          previousY = currentY;
+          timeout = setTimeout( handler, 100 );
+        }
+      }
+ 
+      timeout = setTimeout( handler, 100 );
+      target.bind({
+        mousemove: track,
+        mouseout: clear
+      });
+    }
+  };
+</script>
+{% endblock %}
+
+{% block body %}
+<div style="height:520px;padding:0;">
+<div id="home-accordion" class="CRHidden">
+  <h3><a href="#">about us</a></h3>
+  <div>
+    {% include "_about.html" %}
+  </div>
+  <h3><a href="#">utilities</a></h3>
+  <div>
+    {% include "_utilities.html" %}
+   </div>
+  <h3><a href="#">renewable energy</a></h3>
+  <div>
+    {% include "_energy.html" %}
+  </div>
+  <h3><a href="#">web applications</a></h3>
+  <div>
+    {% include "_web.html" %}
+  </div>
+  <h3><a href="#">mobile</a></h3>
+  <div>
+    {% include "_mobile.html" %}
+  </div>
+  <h3><a href="#">clients</a></h3>
+  <div style="margin-top:20px;">
+ 		<div style="text-align:center;">
+			<img src = '{{docroot}}/images/client-mwd.jpeg'  alt="MWD" title="Metropolitan Water District of Southern California" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-ameriprise.jpeg' alt="Ameriprise" title="Ameriprise Financial" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-usfs.jpeg'  alt="United States Forest Service" title="United States Forest Service" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-arizona.jpeg'  alt="University of Arizona" title="University of Arizona College of Architecture, Planning and Landscape Architecture" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-awwarf.png'  alt="Water Research Foundation" title="Water Research Foundation" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-afosr.gif' alt="AFOSR" title="Air Force Office of Scientific Research" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-dnv.jpeg'  alt="DNV" title="Det Norske Veritas, DNV-KEMA" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-reclamation.jpeg'  alt="USBR" title="Department of the Interior, Bureau of Reclamation" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-sandiego.jpeg'  alt="San Diego County Water Authority" title="San Diego County Water Authority" style='height:50px;'/> 
+			<img src = '{{docroot}}/images/client-whaletrail.jpg'  alt="The Whale Trail" title="The Whale Trail" style='height:50px;'/> 
+		</div>
+  </div>
+</div>
+</div>
+{% endblock %}

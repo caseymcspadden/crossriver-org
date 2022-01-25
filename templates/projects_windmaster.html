@@ -1,0 +1,30 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'WindMASTER' %}
+
+{% block projectbody %}
+
+<img src = '{{docroot}}/images/windmaster-dnv-kema-logo.png' style='float:left;margin-left:30px;margin-right:30px;margin-bottom:10px;'/> 
+<p>Global Energy Concepts (GEC, now part of DNV-KEMA, the Energy and Sustainability business of the multinational risk management firm Det Norske Veritas) is a multi-discipline engineering and technology consulting firm providing services to clients involved in the energy industry. Recognized as leaders in wind energy, the firm specializes in the analysis, design, testing, and management of wind energy systems and projects.</p>
+
+<img src = '{{docroot}}/images/windmaster-qc.png' style='float:right;margin-left:30px;margin-bottom:10px;width:350px;'/> 
+<p>One of the services the company provides to its clients is wind resource assessment: the collection and analysis of meteorological data to assess the suitability of a site for wind farm development. This service includes the specification of equipment, installation and maintenance of meteorological (met) towers and the collection, validation and distribution of met data.</p>
+
+<p>By 2006, GEC managed hundreds of met towers for dozens of clients, and it was poised for rapid growth. That year, GEC approached Cross River Software to develop tools to help streamline the process of data collection and validation and to better integrate the activities of the data staff with those of the logistics teams performing the installation and maintenance of met towers. We ultimately delivered a software application called WindMASTER consisting of four parts:</p>
+
+<ul>
+<li>a Microsoft SQL Server Database for storing both meterorological time-series and logistics data;</li>
+<li>various Windows Services for automatically acquiring, pre-processing and loading meteorological sensor data as it arrives from various delivery sources, such as email attachments;</li>
+<li>a Windows Service that performs a preliminary quality check of loaded data by applying various mathematical algorithms to test for sensor malfunctions and anomalies;</li> 
+<li>a Windows Forms application that serves as the primary interface for data and logistics staff to interact with the database.</li>
+</ul>
+
+<p>By integrating what had previously been a scattered collection of processes into a single application having a single, centralized database, Cross River Software was able to greatly improve the efficiency of GEC's data quality control and validation operations and to provide better incident tracking and accountability for its logistics teams.</p> 
+
+<img src = '{{docroot}}/images/windmaster-timeseries.png' style='float:left;margin-right:30px;margin-bottom:10px;width:400px;'/> 
+<p>After GEC became part of DNV, Cross River worked with DNV's internal software development group, DNV Software, to help develop web-based tools to distribute collected data to clients.</p>
+
+<div id="dialog-technical">
+<p>Built around a Microsoft SQL Server backend, the primary client application is a .NET WinForms application written in C#. Various Windows Service Applications automatically poll a dedicated Microsoft Exchange Server for incoming meteorological data and pre-process the data before storing it in the database. ASP .NET applications allow online access to parts of the database. We created a special-purpose XML-based language to facilitate the sharing of meteorological time-series data among the various pieces of the system.</p>
+</div>
+
+{% endblock %}

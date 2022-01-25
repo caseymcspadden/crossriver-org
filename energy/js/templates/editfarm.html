@@ -1,0 +1,64 @@
+<p><%= attributes.name %></p>
+<form id="editfarm" name="editfarm">
+<div class="tabs">
+<ul>
+    <li><a href="#tabs-edit">Edit</a></li>
+    <li><a href="#tabs-comments">Comments</a></li>
+    <li><a href="#tabs-photos">Photos</a></li>
+</ul>
+
+<div id="tabs-edit" class="edit-pane">
+<table>
+<tbody>
+<tr><td>Name</td><td><input name="name" value="<%= attributes.name %>"/></td></tr>
+<tr><td>Owner</td><td><input name="owner" class="wind-company" value="<%= attributes.owner %>"/></td></tr>
+<tr><td>Developer</td><td><input name="developer" class="wind-company" value="<%= attributes.developer %>"/></td></tr>
+<tr><td>Energy Purchaser</td><td><input name="energy_purchaser" class="wind-company" value="<%= attributes.energy_purchaser %>"/></td></tr>
+<tr><td>Manufacturer</td><td><input name="manufacturer" class="wind-company" value="<%= attributes.manufacturer %>"/></td></tr>
+<tr><td>Location</td><td><input name="coordinates" value="<%= attributes.latitude %>, <%= attributes.longitude %>"/></td></tr>
+<tr><td>Type</td><td>
+<select name="type">
+<option value="1">Small Scale</option>
+<option value="2">Commercial Scale</option>
+<option value="3">Community</option>
+<option value="4">Offshore</option>
+<option value="0">Unknown</option>
+</select>
+</td></tr>
+<tr><td>Status</td><td>
+<select name="status">
+<option value="1">In Service</option>
+<option value="2">Proposed</option>
+<option value="3">Under Construction</option>
+<option value="0">Unknown</option>
+</select>
+</td></tr>
+<tr><td>Online Year</td><td><input name="online_date" value="<%= attributes.online_date %>"/></td></tr>
+<tr><td>Capacity (MW)</td><td><input name="capacity" value="<%= attributes.capacity %>"/></td></tr>
+<tr><td>Units</td><td><input name="units" value="<%= attributes.units %>"/></td></tr>
+</tbody>
+</table>
+</div>
+
+<div id="tabs-comments" class="edit-pane">
+<textarea name="comments"><%= attributes.comments %></textarea>
+</div>
+
+<div id="tabs-photos" class="edit-pane">
+PHOTOS
+</div>
+
+</div>
+
+<div class="buttons">
+<div class="CRFloatLeft">
+<button id="submit">Submit</button>
+<button id="cancel">Cancel</button>
+</div>
+
+<div class="CRFloatRight">
+<button id="delete">Delete</button>
+</div>
+</div>
+
+</form>

@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+
+{% block headscript %}
+<script src="{{docroot}}/scripts/CMUtility.js"></script>
+<script src="{{docroot}}/scripts/autoNumeric.js"></script>
+<script>
+$(function () { 
+	$("#account-accordion").accordion({heightStyle:"content"});
+	$("#payment-accordion").accordion({heightStyle:"content"});
+	$("#tabs").tabs();
+	$('[title]').tooltip({position:{my:"left top", at:"right top"}});
+	
+	var util = new CMUtility();
+	
+	$("#dialog").dialog({ 
+		autoOpen: false,
+		modal: true,
+		width: 600,
+		buttons: [ { text: "Ok", click: function() { $( this ).dialog( "close" )}}]
+		});
+	
+
+	$('#payment input[name="card_number"]').keyup(function(event) {
+		var card_type = util.getCreditCardType($(this).val());
+		$("#card-type-display").removeClass("visa mastercard amex discover").addClass(card_type);
+		$('#payment input[name="card_type"]').val(card_type);
+	});
+	
+	$("#submit").click(function (event) {
+		
+		var data = {};
+		data.iduser = {{user.getId()}};
+		data.idclient = {{user.getClient()}};
+		data.email = $("#email_receipt").val();
+
+		var arr = $("#payment").serializeArray();
+		$.each(arr, function(i,e) {
+			data[e.name] = e.value;
+		});
+
+		$(".invoice").each( function(i,e) {
+			data[$(this).attr("id")] = e.value;
+		});
+		console.log(data);
+		$.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px', 
+            backgroundColor: '#000',
+            'border-radius': '10px',
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+            color: '#fff' 
+        }});
+		
+		$.ajax({
+				url: "{{docroot}}/services/clients/{{user.getClient()}}/payments",
+				data:data, 
+				dataType:'json', 
+				type:'POST', 
+				success: function(json) {
+					console.log(json);
+					$.unblockUI();
+					var html = "";
+					var ok = (json.state !== undefined && json.state=="approved")
+					var title = ok ? "Successful Payment" : "Problem Submitting Payment";
+					
+					if (json.name !== undefined && json.name=="VALIDATION_ERROR")
+					{
+						html += "<p>Validation issues</p>";
+						$.each(json.details, function(i,e) {
+							html += (i+1) + ". " + e.field.substring(e.field.lastIndexOf('.')+1) + " " + e.issue + "<br>";
+						});
+						html += "</p>";
+					}
+					else if (ok)
+					{
+						html = "<p>Thank you. Your payment of $" + json.transactions[0].amount.total + " was processed successfully" + (data.email.length>0 ? " and we have emailed a receipt to " + data.email : "") + ". Your payment code is:</p><p>" + json.id + "</p>";
+					}
+					else
+					{
+						for (field in json)
+							html += "<p>" + field + ": " + json[field] + "</p>";
+					}
+					$("#dialog").html(html).dialog("option","title",title);
+					$("#dialog").dialog("open");
+					
+					get_invoices();
+				},
+				error: function(data) {$.unblockUI(); console.log("ERROR");}, 
+				complete: function(data) {$.unblockUI(); console.log("COMPLETE");}
+		});
+		
+
+		/*		
+		$.post("{{docroot}}/services/clients/{{user.getClient()}}/payments", data, function(json) {
+			console.log(json);
+		},"json").fail(function() {console.log("ERROR");});
+		*/
+		
+	});
+	
+	
+	$("#review_header").click(function(event) {	
+			var cardnumber = $("#payment input[name='card_number']").val();
+			cardnumber = "xxxx-" + cardnumber.substr(cardnumber.length-4);
+			var expires = $("#payment select[name='card_month'] option:selected").val() + "/" + $("#payment select[name='card_year'] option:selected").val()
+				
+			//$("#card_amount_review").html($("#card_amount").html());
+			$("#card_name_review").html($("#payment input[name='card_name']").val());
+			$("#card_type_review").html($("#payment input[name='card_type']").val() + " " + cardnumber + " exp " + expires);
+			$("#billing_line1_review").html($("#payment input[name='billing_line1']").val());
+			$("#billing_line2_review").html($("#payment input[name='billing_line2']").val());
+			$("#billing_city_review").html($("#payment input[name='billing_city']").val());
+			$("#billing_state_review").html($("#payment select[name='billing_state'] option:selected").text());
+			$("#billing_zip_review").html($("#payment input[name='billing_zip']").val());			
+			
+			//var arr = $("#payment").serializeArray();
+			//$.each(arr, function(i,e) {
+				//$("#"+e.name+"_review").html(e.value);
+				//console.log(e.name + " " + e.value);
+			//});
+	});
+	
+	$("#card_year").empty();
+	var year = (new Date()).getFullYear();
+	
+	for (var i=0;i<=10;i++,year++)
+    $("<option/>",{value:year,text:year}).appendTo("#card_year");
+
+	$.get("{{docroot}}/services/postal/states",
+    	function( json ) {
+				$("#billing_state").empty();
+				$.each( json, function(i,e) {
+           $("<option/>",{value:e.code,text:e.name}).appendTo("#billing_state");
+				});
+	});
+	
+	$.get("{{docroot}}/services/clients/{{user.getClient()}}/users",
+    		function( json ) {
+    			var profilehtml = "";
+    			var usershtml = "";
+				for (var i=0;i<json.length;i++)
+				{
+					if (i==0)
+						$("#client-name h1").html(json[i].clientname);				
+				
+					if (json[i].id == {{user.getId()}})
+					{
+						profilehtml += "<tr><td>Name</td><td>" + json[i].name + "</td></tr>"; 
+						profilehtml += "<tr><td>Email</td><td>" + json[i].email + "</td></tr>"; 
+						profilehtml += "<tr><td>User Name</td><td>" + json[i].username + "</td></tr>"; 
+						profilehtml += "<tr><td>Added</td><td>" + json[i].created_at + "</td></tr>"; 
+						profilehtml += "<tr><td>Updated</td><td>" + json[i].updated_at + "</td></tr>"; 
+					}
+					
+					usershtml += '<tr>' +
+							'<td>' + json[i].name + '</td>' +
+							'<td>' + json[i].email + '</td>' +
+							'</tr>';
+				}
+				$("#account-profile tbody").html(profilehtml);
+				$("#account-users tbody").html(usershtml);
+	});
+	
+	var get_payments = function()
+	{
+		$.get("{{docroot}}/services/clients/{{user.getClient()}}/payments?order=payment_time DESC",
+    		function( json ) {
+    			var paymenthistory = {};
+				for (var i=0;i<json.length;i++)
+				{
+					var idinvoice = json[i].idinvoice;
+					if (paymenthistory[idinvoice]===undefined)
+						paymenthistory[idinvoice] = "";
+					paymenthistory[idinvoice] += "<tr><td>Pmt on " + json[i].payment_time + "</td><td>" + json[i].amount + "</td></tr>";
+				}
+				for (var idinvoice in paymenthistory)
+					$("#payments_"+idinvoice).html(paymenthistory[idinvoice]);
+		});
+	}
+	
+	var get_invoices = function()
+	{
+		$('.invoice').off("blur");
+		$.get("{{docroot}}/services/clients/{{user.getClient()}}/invoices",
+    		function( json ) {
+    			var htmlaccount = "<table style=\"width:100%;\"><tbody>";
+    			var htmlpayment = "";
+					for (var i=0;i<json.length;i++)
+					{
+						var id = json[i].id;
+
+						htmlaccount += "<tr><th>" + json[i].name + "</th><th>Amount: " + json[i].amount + "</th><th>Balance: " + json[i].balance + "</th></tr>";
+						htmlaccount += '<tbody id="payments_' + id + '"></tbody>';
+
+						if (json[i].balance>0)
+						{
+							htmlpayment += '<tr>' +
+        						//'<td><input type="checkbox" class="invoice" id="checkbox_'+id+'"/></td>' +
+								'<td>' + json[i].invoiced_on + '</td>' +
+								'<td>' + json[i].name + '</td>' +
+								'<td>' + json[i].amount + '</td>' +
+								'<td>' + json[i].balance + '</td>' +
+								'<td>$<input type="text" class="invoice" id="amount_' + id + '_' + json[i].name + '"/></td>' +
+								'</tr>';
+						}
+					}
+					htmlaccount += "</tbody></table>";
+					$("#account-invoices" ).html(htmlaccount);
+					$("#invoices tbody" ).html(htmlpayment);
+					if (htmlpayment.length==0)
+						$("#invoices tfoot" ).html("<td colspan='5'>You have no outstanding invoices</td>");
+					
+					$(".total_amount").html("");
+        
+					//$(".invoice").autoNumeric("init",{aSign:'$'});
+       
+					$('.invoice').on("blur", function () {
+						var sum = 0;
+						$('.invoice').each(function() {
+							sum += Number($(this).val());
+						});
+						$(".total_amount").html("$" + sum.toFixed(2));
+					});
+				get_payments();
+		});
+   }
+   
+   get_invoices();
+});
+</script>
+
+{% endblock %}
+
+{% block body %}
+<div class="CRBodyTitle" id="client-name"><h1></h1></div>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Account</a></li>
+    <li><a href="#tabs-2">Documents</a></li>
+    <li><a href="#tabs-3">Make a Payment</a></li>
+  </ul>
+  <div id="tabs-1">
+	  <div id="account-accordion">
+		  <h3>My Profile</h3>
+		  <div>
+			<table id="account-profile"><tbody>
+			</tbody></table>
+		  </div>
+		  <h3>Users</h3>
+		  <div>
+			<table id="account-users">
+			<thead>
+				<tr><th>Name</th><th>Email</th></tr>
+			</thead>
+			<tbody></tbody>
+			</table>
+		  </div>
+		  <h3>Billing History</h3>
+		  <div id="account-invoices">			  
+		  </div>
+	  </div>
+  </div>
+  <div id="tabs-2">
+  </div>
+  <div id="tabs-3">
+
+<div id="payment-accordion">
+  <h3>1. Outstanding Invoices</h3>
+  <div id="invoices">
+	<table><thead>
+	<tr><th>Date</th><th>Invoice</th><th>Amount</th><th>Balance Due</th><th>Enter Payment</th></tr>
+	</thead>
+	<tbody></tbody>
+	<tfoot><td colspan="4">TOTAL PAYMENT</td><td class="total_amount"></td></tfoot>
+	</table>
+  </div>
+  <h3>2. Payment Method</h3>
+  <div>
+		<form name="payment" id="payment">
+		<input type="hidden" name="card_type" value="">
+		<table><tbody>
+		<tr><td>Total amount</td>
+		<td class="total_amount"></td></tr>
+		<tr><td>Card number</td>
+		<td><input type="text" name="card_number"/> <span id="card-type-display" class="card-type" style="display:inline-block;vertical-align:middle;"></td></tr>
+		<tr><td>Expires</td>
+		<td><select name="card_month">
+		<option value="1">1 - Jan</option>
+		<option value="2">2 - Feb</option>
+		<option value="3">3 - Mar</option>
+		<option value="4">4 - Apr</option>
+		<option value="5">5 - May</option>
+		<option value="6">6 - Jun</option>
+		<option value="7">7 - Jul</option>
+		<option value="8">8 - Aug</option>
+		<option value="9">9 - Sep</option>
+		<option value="10">10 - Oct</option>
+		<option value="11">11 - Nov</option>
+		<option value="12">12 - Dec</option>
+		</select>
+		<select name="card_year" id="card_year"/>
+		</td></tr>
+		<tr><td>Security code</td>
+		<td><input type="text" name="card_code" size="10"/ title="3 or 4-digit cvv2 code found on the front of American Express cards or on the the back of most other cards.">
+		<tr><td>Name on card</td>
+		<td><input type="text" name="card_name" title="Enter your name exactly as it appears on your card."/>
+		</td></tr>
+		<tr><td>Billing address</td>
+		<td><input type="text" name="billing_line1"/>
+		</td></tr>
+		<tr><td>Address line 2<br>(optional)</td>
+		<td><input type="text" name="billing_line2"/>
+		</td></tr>
+		<tr><td>City</td>
+		<td><input type="text" name="billing_city"/>
+		</td></tr>
+		<tr><td>State</td>
+		<td><select name="billing_state" id="billing_state"/>
+		</td></tr>
+		<tr><td>Zip</td>
+		<td><input type="text" name="billing_zip"/>
+		</td></tr>
+		</tbody></table>
+		</form>
+  </div>
+  <h3 id="review_header">3. Review and Submit</h3>
+  <div id="review">
+  	<table><tbody>
+		<tr><td>Amount</td><td class="total_amount"</td></tr>
+		<tr><td>Card</td><td id="card_type_review"</td></tr>
+		<tr><td>Name on card</td><td id="card_name_review"</td></tr>
+		<tr><td>Address 1</td><td id="billing_line1_review"</td></tr>
+		<tr><td>Address 2</td><td id="billing_line2_review"</td></tr>
+		<tr><td>City</td><td id="billing_city_review"</td></tr>
+		<tr><td>State</td><td id="billing_state_review"</td></tr>
+		<tr><td>Zip</td><td id="billing_zip_review"</td></tr>
+		<tr><td>Email receipt to</td><td><input type="text" id="email_receipt" value="{{user.getEmail()}}"</td></tr>
+		</tbody>
+	</table>
+	</form>
+	<p><input type="button" name="submit" id="submit" value="Submit Payment"></p>
+  </div>
+</div>
+</div>
+</div>
+<div id="dialog">
+</div>
+{% endblock %}

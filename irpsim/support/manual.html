@@ -1,0 +1,2489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="author" content="Casey McSpadden">
+<title>IRPSIM Version 9.0 Reference Manual</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove the comments around the @import statement below when using this as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{margin:0}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+#map_canvas img,#map_canvas embed,#map_canvas object,.map_canvas img,.map_canvas embed,.map_canvas object{max-width:none!important}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+.antialiased,body{-webkit-font-smoothing:antialiased}
+img{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol,ul.no-bullet,ol.no-bullet{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ul.no-bullet{list-style:none}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{display:inline-block;color:rgba(0,0,0,.8);font-size:.75em;line-height:1.4;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:-.15em .15em 0 .15em;padding:.2em .6em .2em .5em;vertical-align:middle;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menu{color:rgba(0,0,0,.8)}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.05em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.spread{width:100%}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
+table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
+table.grid-cols th.tableblock,table.grid-cols td.tableblock{border-width:0 1px 0 0}
+table.grid-all *>tr>.tableblock:last-child,table.grid-cols *>tr>.tableblock:last-child{border-right-width:0}
+table.grid-rows th.tableblock,table.grid-rows td.tableblock{border-width:0 0 1px 0}
+table.grid-all tbody>tr:last-child>th.tableblock,table.grid-all tbody>tr:last-child>td.tableblock,table.grid-all thead:last-child>tr>th.tableblock,table.grid-rows tbody>tr:last-child>th.tableblock,table.grid-rows tbody>tr:last-child>td.tableblock,table.grid-rows thead:last-child>tr>th.tableblock{border-bottom-width:0}
+table.grid-rows tfoot>tr>th.tableblock,table.grid-rows tfoot>tr>td.tableblock{border-width:1px 0 0 0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.unstyled,ol.unnumbered,ul.checklist,ul.none{list-style-type:none}
+ul.unstyled,ol.unnumbered,ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1em;font-size:.85em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{width:1em;position:relative;top:1px}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1{padding-right:.75em;font-weight:bold}
+td.hdlist1,td.hdlist2{vertical-align:top}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none}
+span.footnote,span.footnoteref{vertical-align:super;font-size:.875em}
+span.footnote a,span.footnoteref a{text-decoration:none}
+span.footnote a:active,span.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em;line-height:1.3;font-size:.875em;margin-left:1.2em;text-indent:-1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+h1,h2{letter-spacing:-.01em}
+dt,th.tableblock,td.content{text-rendering:optimizeLegibility}
+p,td.content{letter-spacing:-.01em}
+p strong,td.content strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img{page-break-inside:avoid}
+thead{display:table-header-group}
+img{max-width:100%!important}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>IRPSIM Version 9.0 Reference Manual</h1>
+<div class="details">
+<span id="author" class="author">Casey McSpadden</span><br>
+<span id="email" class="email"><a href="mailto:casey@crossriver.com">casey@crossriver.com</a></span><br>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="users-guide.html">User&#8217;s Guide</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_object_definition_language_overview">1. Object Definition Language Overview</a>
+<ul class="sectlevel2">
+<li><a href="#_comments">1.1. Comments</a></li>
+<li><a href="#_including_files">1.2. Including Files</a></li>
+</ul>
+</li>
+<li><a href="#_irpsim_project_file">2. IRPSIM Project File</a></li>
+<li><a href="#_variables">3. Variables</a>
+<ul class="sectlevel2">
+<li><a href="#_supply_demand_storage_and_cost_variables">3.1. Supply, Demand, Storage and Cost Variables</a></li>
+<li><a href="#_arrays">3.2. Arrays</a></li>
+<li><a href="#_expressions">3.3. Expressions</a>
+<ul class="sectlevel3">
+<li><a href="#_operators">3.3.1. Operators</a></li>
+<li><a href="#_functions">3.3.2. Functions</a>
+<ul class="sectlevel4">
+<li><a href="#_non_stochastic_functions">Non-stochastic Functions</a></li>
+<li><a href="#_stochastic_functions">Stochastic Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_variable_attributes">3.4. Variable Attributes</a>
+<ul class="sectlevel3">
+<li><a href="#_the_type_attribute">3.4.1. The Type Attribute</a></li>
+<li><a href="#_array_attributes">3.4.2. Array Attributes</a></li>
+<li><a href="#_demand_supply_storage_and_cost_attributes">3.4.3. Demand, Supply, Storage and Cost Attributes</a></li>
+</ul>
+</li>
+<li><a href="#_system_variables">3.5. System Variables</a>
+<ul class="sectlevel3">
+<li><a href="#_time_and_trial_dependent_system_variables">3.5.1. Time- and Trial-dependent System Variables</a></li>
+<li><a href="#_system_aggregate_variables">3.5.2. System Aggregate Variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_scripts">4. Scripts</a>
+<ul class="sectlevel2">
+<li><a href="#_script_commands">4.1. Script Commands</a>
+<ul class="sectlevel3">
+<li><a href="#_evaluate_commands">4.1.1. Evaluate Commands</a></li>
+<li><a href="#_cut_commands">4.1.2. Cut Commands</a></li>
+<li><a href="#_gain_and_loss_commands">4.1.3. Gain and Loss Commands</a></li>
+<li><a href="#_put_and_take_commands">4.1.4. Put and Take Commands</a></li>
+<li><a href="#_do_command">4.1.5. Do Command</a></li>
+<li><a href="#_if_else_endif_blocks">4.1.6. If / else / endif blocks</a></li>
+</ul>
+</li>
+<li><a href="#_command_modifiers">4.2. Command Modifiers</a></li>
+<li><a href="#_sample_annotated_script">4.3. Sample Annotated Script</a></li>
+</ul>
+</li>
+<li><a href="#_scenarios">5. Scenarios</a></li>
+<li><a href="#_categories">6. Categories</a>
+<ul class="sectlevel2">
+<li><a href="#_allocation_methods">6.1. Allocation Methods</a></li>
+</ul>
+</li>
+<li><a href="#_regions">7. Regions</a></li>
+<li><a href="#_definitions">8. Definitions</a></li>
+<li><a href="#_options">9. Options</a></li>
+</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_object_definition_language_overview">1. Object Definition Language Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>IRPSIM&#8217;s Object Definition Language (ODL) is used to define all variables, scripts and other objects that IRPSIM uses to run a simulation. With the exception of <a href="#_definitions">Definitions</a> and <a href="#_options">Options</a> and <a href="#_regions">Regions</a>, an
+ODL object is defined in a block of text that begins with <em>#ObjectType name</em> and ends with <em>#END</em>.
+<em>ObjectType</em> may be one of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>VARDEF</p>
+</li>
+<li>
+<p>SCRIPT</p>
+</li>
+<li>
+<p>SCENARIO</p>
+</li>
+<li>
+<p>CATEGORY</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Examples</div>
+<div class="content">
+<pre>#VARDEF basic_apportionment <i class="conum" data-value="1"></i><b>(1)</b>
+#type          supply	sum
+#region	cra
+(basic_apportionment_array[_cyear-(year0)][_ctyear-tyear0])
+#ENDVAR <i class="conum" data-value="2"></i><b>(2)</b>
+
+#SCRIPT	basemix-cra-ondemand <i class="conum" data-value="1"></i><b>(1)</b>
+...
+Body of script
+...
+#END <i class="conum" data-value="2"></i><b>(2)</b>
+
+#CATEGORY groundwater_blended <i class="conum" data-value="1"></i><b>(1)</b>
+#allocationmethod BalanceTake
+chino compton_cup elsinore foothill_cup lakewood live_oak long_beach orange_county upper_claremont
+#END <i class="conum" data-value="2"></i><b>(2)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Object name</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Closing <em>#END</em> tag</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The ODL is case-insensitive so, for example, <em>#VARDEF</em> may also be written as <em>#vardef</em>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Previous versions of IRPSIM required <em>#VARDEF</em> blocks to be terminated by an <em>#ENDVAR</em>
+tag. IRPSIM Version 9 continues to accept <em>#ENDVAR</em> tags, but you may also use
+the shorter <em>#END</em> tag.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_comments">1.1. Comments</h3>
+<div class="paragraph">
+<p>Any line in an ODL file that begins with an asterisk is considered a comment and will be ignored
+by IRPSIM when it loads the file.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>* This line is a comment
+
+*****------------------ So is this line ---------------****
+
+# Not a comment (in fact, this line would generate an error)</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_including_files">1.2. Including Files</h3>
+<div class="paragraph">
+<p>Normally, IRPSIM parses an ODL file by reading one line at a time until it reaches the end of the file.
+You may direct IRPSIM to parse additional files by <em>including</em> them in your ODL file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#include path-to-file</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When IRPSIM encounters an <em>#include</em> directive, it parses the included file from beginning to end
+before continuing to parse the original file. Multiple files may be included, allowing the
+creation of <a href="#_irpsim_project_file">project files</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Snippet from a project file</div>
+<div class="content">
+<pre>**Relationships**  &lt;&lt; this is a comment
+#include ..\Relationships\20x2020_580.rel
+#include ..\Relationships\2013_start_year.rel
+
+**CRA Supplies**
+#include ..\Supplies\Colorado_River_Aqueduct\all_american_lining.sup
+#include ..\Supplies\Colorado_River_Aqueduct\basic_apportionment.sup</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>#included</em> files may be specified using relative paths or absolute paths:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">relative</dt>
+<dd>
+<p>#include ..\Relationships\swp.rel</p>
+</dd>
+<dt class="hdlist1">absolute</dt>
+<dd>
+<p>#include C:\\some\root\directory\Relationships\swp.rel</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Relative paths of <em>included</em> files are calculated relative to the path of the <em>including</em> file.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_irpsim_project_file">2. IRPSIM Project File</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An IRPSIM Project File, also known as a <em>configuration file</em>, is a file containing nothing but <em>#include</em>
+directives and optional comments. When you load a project into IRPSIM, this is the type of file it
+is expecting.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre>*Script**
+#include ..\Operational_Scripts\current_approach.sc
+
+**Options**
+#include ..\Options\2013_basic.opt
+
+**Scenario**
+#include ..\Scenario\current_approach.sce
+
+**Relationships**
+#include ..\Relationships\20x2020_580.rel
+
+**CRA Supplies**
+#include ..\Supplies\Colorado_River_Aqueduct\all_american_lining.sup
+
+**In-Region Supplies**
+#include ..\Supplies\In_Region\chino.sto
+
+**SWP Supplies**
+#include ..\Supplies\State_Water_Project\arvin_edison.sto
+
+**Demands**
+#include ..\Demands\retail.dem</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_variables">3. Variables</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Variables are the main building blocks of IRPSIM. They allow you to express the values of supply,
+demand, storage and other quantities used in a simulation. The basic syntax is as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">Basic variable syntax</div>
+<div class="content">
+<pre>#VARDEF variable_name <i class="conum" data-value="1"></i><b>(1)</b>
+#attribute1 value1 <i class="conum" data-value="2"></i><b>(2)</b>
+#attribute2 value2
+...
+#attributeN valueN
+... declaration body ... <i class="conum" data-value="3"></i><b>(3)</b>
+#END <i class="conum" data-value="4"></i><b>(4)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Start of declaration</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>One or more variable attributes</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>An expression or array</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>End of declaration</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+User-defined variables must begin with a letter and may contain only letters, numerals and the
+underscore character. There is a set of IRPSIM <a href="#_system_variables">System Variables</a> that begin with an underscore.
+IRPSIM variable names are case-insensitive, so <em>VaRiAbLe_NAME</em> is interpreted the same as
+<em>variable_name</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>IRPSIM Version 9 allows two types of user-defined variable: <a href="#_arrays"><em>Arrays</em></a> and <a href="#_expressions"><em>Expressions</em></a></p>
+</div>
+<div class="sect2">
+<h3 id="_supply_demand_storage_and_cost_variables">3.1. Supply, Demand, Storage and Cost Variables</h3>
+<div class="paragraph">
+<p>IRPSIM runs a simulation by manipulating supply, demand and storage variables using a <a href="#_scripts">script</a>.
+In addition, IRPSIM keeps track of <a href="#Aggregate Variables">aggregate costs</a>. In ODL, you indicate that
+a variable is a supply, demand, storage or cost variable by specifying a special <em>type</em> attribute in the variable definition.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable Type</th>
+<th class="tableblock halign-left valign-top">Attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supply</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#type supply</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Demand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#type demand</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#type storage</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#type cost</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_arrays">3.2. Arrays</h3>
+<div class="paragraph">
+<p>An array is a two-dimensional data structure that is indexed by a row and column. You
+specify an array by including <em>#rows</em> and <em>#columns</em> attributes immediately following
+the <em>#VARDEF</em> declaration:</p>
+</div>
+<div class="listingblock">
+<div class="title">A 3 row by 2 column array definition</div>
+<div class="content">
+<pre>#VARDEF some_array
+#rows 3
+#columns 2
+1.3  2.4
+8.5  6.7
+12.0  9.2
+#END</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>An array may be referenced in an expression by using row and column indices:</p>
+</div>
+<div class="listingblock">
+<div class="title">Referencing an array variable in an expressiomn</div>
+<div class="content">
+<pre>some_array[row_index][column_index]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the example above, <em>row_index</em> and <em>column_index</em> may be constant values or expressions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_expressions">3.3. Expressions</h3>
+<div class="paragraph">
+<p>An <em>expression</em> in IRPSIM is a mathematical expression that may contain operators, functions and
+variable references. With a few exceptions, the IRPSIM expression parser follows familiar
+conventions in evaluating expressions&#8212;&#8203;operator notation and precedence, nesting within parentheses, etc.</p>
+</div>
+<div class="listingblock">
+<div class="title">Examples of IRPSIM expressions</div>
+<div class="content">
+<pre>semitropic + arvin + mojave + kerndelta + sbvmwd_carryover + swpcarryover <i class="conum" data-value="1"></i><b>(1)</b>
+
+max(min(dwcv_put-dwcv.put,dwcv_cap-dwcv.resolved),0) <i class="conum" data-value="2"></i><b>(2)</b>
+
+if(_cyear &gt;= start_dwcv,max(250000 - dwcv_remaining_obligation,0),0) <i class="conum" data-value="3"></i><b>(3)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>A simple sum</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Showing use of <em>max</em> and <em>min</em> functions</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Showing use of <em>if</em> function and the system variable <em>_cyear</em></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Unlike many programming language, IRPSIM does not make use of an assignment operator,
+e.g. <em>A=B</em>. The ODL way of assigning <em>B</em> to the variable <em>A</em> is</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>#VARDEF A
+B
+#END</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_operators">3.3.1. Operators</h4>
+<div class="paragraph">
+<p>IRPSIM supports the same operators, and follows the same conventions of operator evaluation
+precedence, as most modern programming languages. The tables that follow list IRPSIM&#8217;s
+operators in order of precedence, lowest to highest.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Arithmetic Operators</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a + b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addition</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a plus b</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a - b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subtraction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a plus b</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a * b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Multiplication</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a times b</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a / b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Division</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a divided by b</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a % b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modulus</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a <em>modulo</em> b, or the remainder of a divided by b</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a ^ b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exponentiation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a raised to the power b.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Logical Operators</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a || b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if either a OR b is non-zero and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a | b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identical to a || b.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a &amp;&amp; b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if both a AND b are non-zero and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a &amp; b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identical to a &amp;&amp; b.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">!a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is 0 and evaluates to 0 otherwise.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Comparison Operators</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a == b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Equals</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is equal to b and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a != b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not equal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is not equal to b and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a &lt; b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Less than</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is less than b and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a &lt;= b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Less than or equal to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is less than or equal to b and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a &gt; b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Greater than</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is greater than b and evaluates to 0 otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a &gt;= b</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Greater than or equal to</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluates to 1 if a is greater than or equal to b and evaluates to 0 otherwise.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Indexing Operators</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a[r][c]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array indexing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value of the entry at row <em>r</em> and column <em>c</em> of array <em>a</em>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a[_t-n]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time lag indexing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value of variable at <em>n</em> time steps prior to the current time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a[_y-n]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time lag indexing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value of variable at <em>n</em> years prior to the current time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a[_m-n]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time lag indexing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value of variable at <em>n</em> months prior to the current time step.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_functions">3.3.2. Functions</h4>
+<div class="paragraph">
+<p>IRPSIM supports a variety of predefined functions. These include the familiar mathematical functions
+found in most programming languages in addition to some more esoteric statistical functions.
+IRPSIM also includes a number of stochastic functions that return random draws from a variety of
+parametrically-defined statistical distributions. These functions allow IRPSIM to be used
+as a Monte-Carlo simulation tool.</p>
+</div>
+<div class="sect4">
+<h5 id="_non_stochastic_functions">Non-stochastic Functions</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">abs(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The absolute value of x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">acos(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The inverse cosine of x, in radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">asin(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The inverse sine of x, in radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">atan(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The inverse tangent of x, in radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ceil(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The smallest integer greater than or equal to x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cos(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cosine of x, where x is in radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cumbinomial(x, n, p)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative binomial distribution function of n trials and success probability p, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cumf(v1, v2, x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the F cumulative density function at x using the numerator degrees of freedom v1 and denominator
+degrees of freedom v2.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cumchi(v,x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cumulative of the chi-square distribution having v degrees of freedom, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cumpoisson(n, &lambda;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative poison distribution function having mean parameter &lambda;􏰀, evaluated at n.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">erf(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The error function evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">erfc(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The complementary error function evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exp(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exponential function of x, or <em>e</em> raised to the power x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exp10(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The base-10 exponential function of x, or 10 raised to the power x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">factorial(n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">n factorial, or n * (n-1) * &#8230;&#8203; * 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">floor(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The largest integer less than or equal to x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gammap(a, x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cumulative incomplete gamma function for a&gt;0, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gammaq(a, y)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the cumulative incomplete Gamma (capital <em>G</em>) function for a&gt;0, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ibeta(a, b, x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the incomplete beta function having parameters a and b, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if(x, y, z)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A conditional function returning y if x is non-zero (<em>true</em>), and z if x is zero (<em>false</em>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">invbinomial(x, k, p)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The inverse binomial distribution function of n trials and success probability p, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">invf(v1, v2, p)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the inverse of the F cumulative density function with numerator degrees of freedom V1 and
+denominator degrees of freedom V2 for the probability p.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">invnormal(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the inverse cumulative standard normal distribution.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">invt(v, x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the inverse of the t-distribution with v degrees of freedom, evaluated at x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lnfactorial(n)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The logarithm of the factorial function at n where n &gt;= 􏰄0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lngamma(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The logarithm of the gamma function at x, where x 􏰄&gt;= 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">log(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The natural logarithm of x, where x􏰄 &gt;= 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">log10(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The base-10 logarithm of x, where x􏰄 &gt;= 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">min(x, y)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum of x and y.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">max(x, y)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum of x and y.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sin(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sine of x, where x is in radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sinh(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The hyperbolic sine of x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sqrt(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The square root of x.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tan(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tangent of x, where x is in radians.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tanh(x)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The hyperbolic tangent of x.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_stochastic_functions">Stochastic Functions</h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exponential(&lambda;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from an exponential distribution having
+rate parameter &lambda;􏰀, where &lambda; 􏰀&gt; 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">geometric(&rho;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a geometric distribution having
+probability parameter &rho;􏰀, where 0 &lt;= &rho; &lt;= 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">poisson(&lambda;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a poisson distribution having
+mean parameter &lambda;􏰀, where &lambda; 􏰀&gt;= 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">beta(&alpha;, &beta;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a beta distribution having parameters &alpha; and &beta;,
+where &alpha; &gt; 0 and &beta; &gt; 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">binomial(<em>n</em>, &rho;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a binomial distribution of <em>n</em> trials, with each trial having
+success probability &rho;, where <em>n</em> &gt;= 0 and 0 &lt;= &rho; &lt;= 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">normal(&mu;, &sigma;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a normal distribution having mean &mu; and standard deviation &sigma;.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uniform(<em>a</em>, <em>b</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a uniform distribution, <em>a</em> &lt;= x &lt;= <em>b</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">weibull(<em>k</em>, &lambda;)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A random draw from a weibull distribution having shape parameter <em>k</em> and
+scale parameter &lambda;, where <em>k</em> &gt; 0 and &lambda; &gt; 0.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variable_attributes">3.4. Variable Attributes</h3>
+<div class="paragraph">
+<p>Variables may have one or more attributes assigned to them that affect how they are processed
+by IRPSIM.</p>
+</div>
+<div class="listingblock">
+<div class="title">Assigning Attributes to a Variable</div>
+<div class="content">
+<pre>#VARDEF variable_name
+#attribute1 value1 <i class="conum" data-value="1"></i><b>(1)</b>
+#attribute2 value2 <i class="conum" data-value="2"></i><b>(2)</b>
+... declaration body ...
+#END</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The value <em>value1</em> is assigned to the attribute <em>attribute1</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The value <em>value2</em> is assigned to the attribute <em>attribute2</em></td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_the_type_attribute">3.4.1. The Type Attribute</h4>
+<div class="paragraph">
+<p>The <em>type</em> attribute is IRPSIM&#8217;s most fundamental attribute. It tells IRPSIM whether the
+variable is a demand, supply, storage or cost variable; the <em>stage</em> of the variable; and
+whether or not to re-evaluate the variable each time it is encountered in an expression.</p>
+</div>
+<div class="listingblock">
+<div class="title">Examples</div>
+<div class="content">
+<pre>#VARDEF dwcv
+#type storage <i class="conum" data-value="1"></i><b>(1)</b>
+...
+#END <i class="conum" data-value="2"></i><b>(2)</b>
+
+#VARDEF hayfield
+#type supply <i class="conum" data-value="3"></i><b>(3)</b>
+...
+#ENDVAR <i class="conum" data-value="2"></i><b>(2)</b>
+
+#VARDEF mojave_take6
+#type stage6 <i class="conum" data-value="4"></i><b>(4)</b>
+mojave.take
+#END
+
+#VARDEF cra_service_area
+#type alwaysevaluate <i class="conum" data-value="5"></i><b>(5)</b>
+hinds_ps - dwcv.put - dwcv_remaining_obligation + dwcv_transfer_reservoir.take
+#ENDVAR</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><em>dwcv</em> is defined as a <em>storage</em> variable</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>A variable declaration may be terminated with <em>#END</em> or <em>#ENDVAR</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><em>hayfield</em> is defined as a supply variable</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><em>mojave_take6</em> will be evaluated when the script command "evaluate stage stage6" is executed</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><em>cra_service_area</em> will be re-evaluated every time it is encountered in an expression</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">demand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The declared variable is a demand variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">supply</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The declared variable is a supply variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">storage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The declared variable is a storage variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The declared variable is a cost variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">alwaysevaluate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The variable will be evaluated each time it is encountered in an expression. This attribute
+is useful for evaluating conditional expressions in scripts that depend on the current status
+of puts, takes, surpluses, etc. The default behavior is for a variable evaluation to remain
+fixed at its initially calculated value over the course of a script execution.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stageN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A flag that determines when a variable is evaluated during the execution of a script. All
+variables having the <em>stageN</em> #type attribute will be evaluated when IRPSIM executes the script
+command <em>evaluate stage stageN</em>.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>stageN</em> is merely a naming convention for the stage execution flag. If a variable is assigned
+the type attribute "donkey" as in <em>#type donkey</em>, then the variable will be evaluated if the
+executing script contains the command <em>evaluate stage donkey</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+IRPSIM processes demand, supply and storage variables differently than it does "ordinary"
+variables, and it will ignore any other <em>#type</em> attributes that may be specified for these
+variables.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It generally doesn&#8217;t make sense for a variable to have both <em>alwaysevaluate</em> and a stage
+flag specified as <em>#type</em> attributes. A stage flag instructs IRPSIM to lock down the value of
+a variable at a particular "stage" of a script, whereas <em>alwaysevaluate</em> has the opposite
+effect: the variable will be re-evaluated if it is encountered later in the script.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_array_attributes">3.4.2. Array Attributes</h4>
+<div class="paragraph">
+<p>Array variables have the special attributes <em>#rows</em> and #<em>columns</em> that tell IRPSIM how many
+rows and columns are in the array.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre>#VARDEF array_variable
+#rows 3
+#columns 2
+1.3  2.4
+8.5  6.7
+12.0  9.2
+#END</pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_demand_supply_storage_and_cost_attributes">3.4.3. Demand, Supply, Storage and Cost Attributes</h4>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Attributes that may be assigned to Demand, Supply, Storage and Cost Variables</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#region <em>region_name</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The geographical region to which the variable belongs. IRPSIM maintains
+<a href="#_system_aggregate_variables">regional aggregates</a> for each region that is declared.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Attributes that may be assigned to Demand, Supply and Storage Variables</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rank</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#rank <em>numeral</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <em>rank</em> attribute comes into play whenever IRPSIM encounters a <em>using byRank</em>
+<a href="#_command_modifiers">command modifier</a> in a script command.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Attributes that may be assigned to Demand and Supply Variables</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cutback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#cutback <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount that will be reduced from this variable when IRPSIM executes
+a script <a href="#_cut_commands">cut command</a>.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Attributes that may be assigned to Storage Variables</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Usage</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">floor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#floor <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The minimum level of storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">capacity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#capacity <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum level of storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#gain <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The natural (non-operational) flow into storage during a time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">loss</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#loss <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The natural (non-operational) loss from storage during a time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">put</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#put <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount that will be put into storage during a time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">take</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#take <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount that will be taken from storage during a time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fullput</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#fullput <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The conveyance capacity for flows into storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">fulltake</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">#fulltake <em>expression</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The conveyance capacity for flows out of storage.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<em>expression</em> may be a constant, a variable name or a complex <a href="#_expressions">expression</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_system_variables">3.5. System Variables</h3>
+<div class="paragraph">
+<p>In addition to variables that are defined by the user, IRPSIM has a number of predefined <em>system</em>
+variables that may be used in an expression. By convention, these system variables begin with
+an underscore (_).</p>
+</div>
+<div class="sect3">
+<h4 id="_time_and_trial_dependent_system_variables">3.5.1. Time- and Trial-dependent System Variables</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_timestep</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current time step.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_trial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current simulation trial.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_year</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current year (ends with the month defined in the yearend option).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_cyear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current calendar year.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_tyear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current trace year (ends with the month defined in the
+yearend property).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_ctyear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current calendar trace year.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_period</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current period. The value depends on the <strong>siminterval</strong> of the simulation. If <strong>siminterval</strong> is annual, _period will be expressed as YYYY; if <strong>siminterval</strong> is monthly, _period will be expressed as
+YYYYMM, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_tperiod</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current trace period. As with _period, the value depends on the <strong>siminterval</strong> of the simulation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_month</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current month. Values range from 1 (January) to 12 (December).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_day</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current day in the month. Values range from 1 to 31.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_weekday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current day in the week. Values range from 1 (Sunday) to 7 (Saturday)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_dayinyear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current day in the year. Values range from 1 to 366 (during leap years)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_daysinyear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of days in the current year. Is either 365 or 366 (during leap years).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_daysinmonth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of days in the current month. Values range from 1 to 31.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_weekinyear</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current week in the year. Values range from 1 to 53 (for days 365 and 366).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_firstdayofmonth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The _dayinyear corresponding to the first day of the current month.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_lastdayofmonth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The _dayinyear corresponding to the last day of the current month.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_midmonthday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The _dayinyear corresponding to the middle day of the current month.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_jan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is January, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_feb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is February, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_mar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is March, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_apr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is April, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_may</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is May, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_jun</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is June, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_jul</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is July, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_aug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is August, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_sep</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is September, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_oct</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is October, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_nov</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is November, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_dec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>1</em> if the current month is December, <em>0</em> otherwise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_sinN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <em>Nth</em> harmonic of a sine function having a period of one year, evaluated at the current
+_midmonthday. This value remains constant throughout a month for simulations having a <strong>siminterval</strong>
+of less than a month. There are six _sinN system variables: _sin1, _sin2, _sin3, _sin4, _sin5, _sin6.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_cosN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <em>Nth</em> harmonic of a cosine function having a period of one year, evaluated at the current
+_midmonthday. This value remains constant throughout a month for simulations having a <strong>siminterval</strong>
+of less than a month. There are six _cosN system variables: _cos1, _cos2, _cos3, _cos4, _cos5, _cos6.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_sinNd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <em>Nth</em> harmonic of a sine function having a period of one year, evaluated at the current _dayinyear.
+There are six _sinNd system variables: _sin1d, _sin2d, _sin3d, _sin4d, _sin5d, _sin6d.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_cosNd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <em>Nth</em> harmonic of a cosine sine function having a period of one year, evaluated at the current _dayinyear. There are six _cosNd system variables: _cos1d, _cos2d, _cos3d, _cos4d, _cos5d, _cos6d.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_system_aggregate_variables">3.5.2. System Aggregate Variables</h4>
+<div class="paragraph">
+<p>IRPSIM maintains running totals of supply, demand, storage and other quantities over the course of
+a simulation trial. These quantites may be accessed using IRPSIM&#8217;s system aggregate variables.
+In addition, Regionally-qualified versions of these variables keep track of the quantities for every
+<a href="#_regions">region</a> that the user defines.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_cost, _cost.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sum of all cost variables that have been evaluated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_demand, _demand.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sum of all demand variables that have been evaluated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_demandcut, _demandcut.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative total of all demand cuts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_gainloss, _gainloss.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative value of all gains to storage less the cumulative value of all losses.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_netsurplus, _netsurplus.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shorthand for _supply - _demand - _put + _take</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_put, _put.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative value of all puts into storage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_storage, _storage.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sum of water stored in all storage devices.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_supply, _supply.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The sum of all supply variables that have been evaluated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_supplycut, _supplycut.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative total of all supply cuts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_surplus, _surplus.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shorthand for _supply - _demand</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">_take, _take.region</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cumulative value of all takes from storage.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scripts">4. Scripts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An ODL script is a detailed set of instructions that IRPSIM executes each time step of each
+simulation trial. A script is declared in ODL as follows:</p>
+</div>
+<div class="listingblock">
+<div class="title">Script Declaration</div>
+<div class="content">
+<pre>#SCRIPT script_name
+* comment <i class="conum" data-value="1"></i><b>(1)</b>
+line 1
+line 2
+...
+line N
+#END</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Comments begin with an asterisk</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>With the exception of <em>do</em> commands and <em>if / endif</em> blocks, each line of a script follows
+the following format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>command &lt;modifiers&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The types of modifiers allowed depend on the command and some modifiers are optional.</p>
+</div>
+<div class="sect2">
+<h3 id="_script_commands">4.1. Script Commands</h3>
+<div class="sect3">
+<h4 id="_evaluate_commands">4.1.1. Evaluate Commands</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Allowed Modifiers</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate demand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluate one or more demand nodes. This will increase the value of the _demand
+system variable and will decrease the values of the _surplus and _netsurplus system variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate supply</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluate one or more supply nodes. This will increase the value of the _supply
+system variable and will increase the values of the _surplus and _netsurplus system variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate stage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stage_name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evaluate all variables having a <a href="#_the_type_attribute">type attribute</a> of <em>stage_name</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_cut_commands">4.1.2. Cut Commands</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Allowed Modifiers</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cut demand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category, limit, using, ignorebalance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cut back demand from the specified node or category using either the default allocation rule, or the allocation rule specified by the using modifier (if applied to a category). Limit the amount cut by either the amount specified in the limit clause or by net shortage (negative of _netsurplus), unless ingorebalance is specified, in which case the net shortage is not limiting. Reduces the value of the _demand system variable and increases the value of the _demandcut system variable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cut supply</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category, limit, using, ignorebalance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cut back supply from the specified node or category using either the default allocation rule, or the allocation rule specified by the using modifier (if applied to a category). Limit the amount cut by either the amount specified in the limit clause or by _netsurplus, unless ingorebalance is specified, in which case _netsurplus is not limiting. Reduces the value of the _supply system variable and increases the value of the _supplycut system variable.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_gain_and_loss_commands">4.1.3. Gain and Loss Commands</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Allowed Modifiers</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Executes natural gains to storage. If specified, the execution is limited to a node or category. Increases the value of the _storage and _gainloss system variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">loss</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Executes natural losses to storage. If specified, the execution is limited to a node or category. Decreases the value of the _storage and _gainloss system variables.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_put_and_take_commands">4.1.4. Put and Take Commands</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Command</th>
+<th class="tableblock halign-left valign-top">Allowed Modifiers</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">put</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category, limit, using, ignorebalance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Put water into the specified node or category using either the default allocation rule, or the allocation rule specified by the using modifier (if applied to a category). Limit the amount put by either the amount specified in the limit clause or by _netsurplus, unless ingorebalance is specified, in which case _netsurplus is not limiting. Increases the value of the _put, _puttake, and _storage system variables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">take</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node, category, limit, using, ignorebalance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Take water from the specified node or category using either the default allocation rule, or the allocation rule specified by the using modifier (if applied to a category). Limit the amount taken by either the amount specified in the limit clause or by the net shortage (negative of _netsurplus), unless ingorebalance is specified, in which case the net shortage is not limiting. Increases the value of the _take system
+variable, and reduces the value of the _puttake and _storage system variable.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_do_command">4.1.5. Do Command</h4>
+<div class="paragraph">
+<p>The <em>do</em> command instructs IRPSIM to execute a different script. Execution of the calling script
+continues after the called script has executed.</p>
+</div>
+<div class="listingblock">
+<div class="title">The do Command</div>
+<div class="content">
+<pre>#SCRIPT CallingScript
+...
+do CalledScript
+... <i class="conum" data-value="1"></i><b>(1)</b>
+#END
+
+#SCRIPT CalledScript
+...
+#END</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Execution of <em>CallingScript</em> continues on this line after <em>CalledScript</em> has finished executing</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_if_else_endif_blocks">4.1.6. If / else / endif blocks</h4>
+<div class="paragraph">
+<p>If / else / endif blocks allow you to specify a block of script that will execute only if a particular condition is
+satisfied.</p>
+</div>
+<div class="listingblock">
+<div class="title">if / endif block</div>
+<div class="content">
+<pre>if {condition} <i class="conum" data-value="1"></i><b>(1)</b>
+   ... block of script to execute if condition is true (evaluates to non-zero) ...
+endif</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">if / else / endif block</div>
+<div class="content">
+<pre>if {condition} <i class="conum" data-value="1"></i><b>(1)</b>
+   ... block of script to execute if condition is true (evaluates to non-zero) ...
+else
+   ... block of script to execute if condition is false (evaluates to zero) ...
+endif</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The condition may be any valid ODL <a href="#_expressions">expression</a> and it must be surrounded by
+curly braces {}</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_modifiers">4.2. Command Modifiers</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Modifier</th>
+<th class="tableblock halign-left valign-top">Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">node <em>NodeName</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limits the execution of the command to the node NodeName.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">category</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">category <em>CategoryName</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limits the execution of the command to the <a href="#_categories">category</a> CategoryName. If the command involves an allocation, the allocation will be performed using the default allocation rule for the category, or by the allocation specified in the using modifier, if one is present.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">using</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">using <em>AllocationMethod</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the command involves an allocation, the allocation will be performed using the specified
+<a href="#_allocation_methods">AllocationMethod</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">limit {<em>expression</em>}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The command operation will be limited by the expression contained within the {} braces.
+May be used with cut demand, cut supply, put and take commands. The <em>expression</em> may be any
+valid ODL <a href="#_expressions">expression</a> and it must be surrounded by
+curly braces {}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignorebalance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignorebalance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normally, the cut demand, cut supply, put and take commands will be constrained by the current
+value of _netsurplus. If ignorebalance is specified, this constraint will be ignored.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_sample_annotated_script">4.3. Sample Annotated Script</h3>
+<div class="listingblock">
+<div class="content">
+<pre>#SCRIPT main_script
+
+gain <i class="conum" data-value="1"></i><b>(1)</b>
+
+loss <i class="conum" data-value="2"></i><b>(2)</b>
+
+evaluate demand <i class="conum" data-value="3"></i><b>(3)</b>
+
+evaluate stage stage2 <i class="conum" data-value="4"></i><b>(4)</b>
+
+evaluate supply node cra <i class="conum" data-value="5"></i><b>(5)</b>
+
+put node salton_sea_storage <i class="conum" data-value="6"></i><b>(6)</b>
+
+put node cra_reservoir <i class="conum" data-value="7"></i><b>(7)</b>
+
+put category groundwater using BalanceTake <i class="conum" data-value="8"></i><b>(8)</b>
+
+evaluate stage stage3 <i class="conum" data-value="9"></i><b>(9)</b>
+
+take node swpcarryover ignorebalance <i class="conum" data-value="10"></i><b>(10)</b>
+
+take node swp_reservoir limit {swp_remain} <i class="conum" data-value="11"></i><b>(11)</b>
+
+if {_netsurplus &lt; 0} <i class="conum" data-value="12"></i><b>(12)</b>
+  take node sanbernardino_option
+  take node semitropic
+  take node Arvin
+endif
+
+if {_netsurplus &lt; 0}
+  do shortage_script <i class="conum" data-value="13"></i><b>(13)</b>
+else
+  do surplus_script <i class="conum" data-value="14"></i><b>(14)</b>
+endif
+
+#END</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Perform a gain operation on every storage device, since there is no <em>node</em> or <em>category</em> modifier. This increases the value of the _gainloss system variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Perform a loss operation on every storage device, since there is no <em>node</em> or <em>category</em> modifier. This decreases the value of the _gainloss system variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Evaluate all demand variables, since there is no <em>node</em> or <em>category</em> modifier. This increases the value of the _demand system variable and decreases the values of the _surplus and _netsurplus system variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Evaluate all variables having a <em>type</em> attribute of <em>stage2</em>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Evaluate the supply of the single supply variable <em>cra</em>. This increases the values of the _supply, _surplus and _netsurplus system variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Put water into the single storage device <em>salton_sea_storage</em> Since the <em>ignorebalance</em> modifier
+has not been specified, the amount of water put will be limited by <em>netsurplus and the _put</em> attribute
+of the storage device. This operation will change the values of the _put, _puttake, _netsurplus and
+_storage system variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
+<td>Put water into the single storage device <em>cra_reservoir</em> subject to all of the caveats mentioned above.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Put water into devices that are members of the <em>groundwater</em> category. Allocate puts among these
+devices using the <em>BalanceTake</em> allocation method (if no <em>using</em> modifier had been specified, the
+allocation method used would be the one declared in the <em>groundwater</em> <a href="#_categories">category</a> definition).
+Since <em>ignorebalance</em> has not been specified, the total amount put to the category will be limited
+by the _netsurplus system variable.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="9"></i><b>9</b></td>
+<td>Evaluate all variables having a <em>type</em> attribute of <em>stage3</em>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="10"></i><b>10</b></td>
+<td>Take water from the single storage device <em>swpcarryover</em>. Since <em>ignorebalance</em> has been indicated,
+the amount of water taken will be limited only by the <em>take</em>, <em>fulltake</em> and <em>floor</em> attributes of the
+storage device. Water will be taken from this device even if the amount exceeds the current net shortage
+(negative of _netsurplus). This operation will change the values of the _take, _puttake, _netsurplus and
+_storage system variables.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="11"></i><b>11</b></td>
+<td>Take water from the single storage device <em>swp_reservoir</em>. The amount taken will be
+limited by the limit expression: the value of the variable swp_remain. Note that since
+<em>ignorebalance</em> has not been indicated, the take will also be limited by the current net shortage.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="12"></i><b>12</b></td>
+<td>This is an example of a conditional expression. The commands between the <em>if</em> and <em>endif</em>
+lines will only be executed if the condition within the curly braces evaluates to a non-zero quantity.
+Here, the conditional expression tests whether _netsurplus is less than 0 (i.e., there’s a shortage).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="13"></i><b>13</b></td>
+<td>Execute the script named <em>shortage_script</em> if _netsurplus is less than 0.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="14"></i><b>14</b></td>
+<td>Execute the script named <em>surplus_script</em> if _netsurplus is greater than or equal to 0.</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_scenarios">5. Scenarios</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In IRPSIM Version 9, a scenario is simply a list of variables that will be included in the simulation
+output file:</p>
+</div>
+<div class="listingblock">
+<div class="title">Scenario Declaration</div>
+<div class="content">
+<pre>#SCENARIO scenario_name
+variable1
+variable2
+variable3
+...
+variableN
+#END</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In early versions of IRPSIM, back when RAM and processing speed were limited,
+scenarios included optional <em>save</em> and <em>write</em> parameters that instructed IRPSIM to
+save variable values to binary simulation files and/or to write values to output files.
+The use of these parameters is deprecated, and IRPSIM will issue a warning if it encounters
+them when parsing scenarios.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_categories">6. Categories</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Categories are used to limit certain script operations to groups of variables.</p>
+</div>
+<div class="listingblock">
+<div class="title">Category Declaration</div>
+<div class="content">
+<pre>#CATEGORY category_name
+#allocationmethod MethodType <i class="conum" data-value="1"></i><b>(1)</b>
+... List of Variables ...
+#END</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <em>#allocationmethod</em> attribute is optional. When it is present, <em>MethodType</em> must be one of the
+allocation methods described below.</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_allocation_methods">6.1. Allocation Methods</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Method</th>
+<th class="tableblock halign-left valign-top">Applies To</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ByRank</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supply, Demand, Storage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IRPSIM will perform the action on each variable in the category in increasing order of the rank
+of each variable (as determined by the variable&#8217;s <em>#rank</em> attribute)
+until the limit of the action has been reached (e.g. all surplus water has been put).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BalancePercent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supply, Demand</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RPSIM will cut back the supply or demand of each variable in the category in proportion
+to each variable’s supply or demand contribution.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BalancePercentCapacity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IRPSIM will put to or take from devices in the category while attempting to balance the ratio
+of storage level to capacity among the devices in the category.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BalancePut</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IRPSIM will put to or take from devices in the category while attempting to balance the ratio
+of remaining capacity to put conveyance (fullput) among the devices in the category.
+Loosely speaking, it tries to balance the number of years of unused capacity in each device.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BalanceTake</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Storage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IRPSIM will put to or take from devices in the category while attempting to balance the ratio
+of storage level to take conveyance (fulltake) among the devices in the category.
+Loosely speaking, it tries to balance the number of years of water stored in each device.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_regions">7. Regions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Regions are not declared directly in the ODL. Rather, they are indirectly declared by assigning
+#region attributes to supply, demand, storage or cost variables.</p>
+</div>
+<div class="listingblock">
+<div class="title">Assigning a Region to a Variable</div>
+<div class="content">
+<pre>#VARDEF variable_name
+#region some_region
+... body of definition ...
+#END</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_definitions">8. Definitions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A definition is an alternative to a user-defined <a href="#_variables">variable</a> that requires less memory and
+processing overhead than a <em>#VARDEF</em> variable. You may use a definition in an <a href="#_expressions">expression</a>
+the same way you would use a variable, except that you may not use a lag index.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre>#DEFINE DiscountRate  1.05
+
+#VARDEF variable_name <i class="conum" data-value="1"></i><b>(1)</b>
+some_other_variable * DiscountRate
+#END
+
+#VARDEF variable_name <i class="conum" data-value="2"></i><b>(2)</b>
+some_other_variable * DiscountRate[_y-1]
+#END</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>This is a valid use of <em>DiscountRate</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This is not a valid use of <em>DiscountRate</em>: definitions may not have a lag index</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The #DEFINE notation may only be used to define simple, constant values. Objects
+expressed using this notation may not be included in simulation output files.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">9. Options</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">IRPSIM Options</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 33%;">
+<col style="width: 33%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Option</th>
+<th class="tableblock halign-left valign-top">ODL Syntax</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simulation Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">simulationname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of simulation. The simulation name will be used as a prefix for the name of each simulation
+run, and as the folder name for IRPSIM output files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Output Folder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">outputfolder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The folder in which IRPSIM output files will be saved. The folder name may be an
+absolute location (e.g. c:\irpsim\output) or a location relative to the main configuration
+file (e.g. ..\..\output).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of Trials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">numtrials</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of trials in the simulation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Precision</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">precision</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The numerical precision of the saved simulation output.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cost Precision</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">costprecision</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The precision of output variables representing costs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simulation Begin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">simbegin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The start time period of the simulation (e.g. 2015, 201501).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simulation End</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">simend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The end time period of the simulation (e.g. 2050, 205012).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simulation Interval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">siminterval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The simulation interval or length of a simulation time step. May be year, month, week or day.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Begin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tracebegin</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The start year of the hydrology trace (e.g. 1922).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace End</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">traceend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The end year of the hydrology trace (e.g. 2004).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Start</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tracestart</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The year to start the hydrology trace when running a simulation. Defaults to tracebegin.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tracemode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dynamic or Static. When <strong>dynamic</strong> is selected, the hydrology trace is shifted ahead one
+year at the start of each simulation trial (or back to tracebegin if the end of the trace has
+been reached). Whan <strong>static</strong> is selected, the same hydrology trace is used for each simulation trial.
+This is only useful when there are sources of variation other than hydrology in the simulation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Year End</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yearend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For monthly simulations, <strong>yearend</strong> is the last month of the water year.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Random Seed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">randomseed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The seed of the random number generator used to generate outcomes of stochastic variables. If this
+is set to <strong>0</strong>, the seed itself is randomly generated.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2015-09-15 14:56:12 CDT
+</div>
+</div>
+</body>
+</html>

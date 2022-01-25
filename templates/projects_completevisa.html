@@ -1,0 +1,33 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'CompleteVisa' %}
+
+{% block projectbody %}
+
+<img src = '{{docroot}}/images/visa_logo.gif' style='float:right;margin-left:20px;margin-bottom:20px;'> 
+<p>Complete Visa Services, LLC assists individual clients and travel agents in obtaining visas for travel to Russia.</p>
+<p>The Russian visa application process can be frustrating, with myriad documentation
+requirements depending on the type of visa being sought, length of stay, and other considerations.
+Many visa applicants find their applications delayed or rejected because they failed to submit a required document or
+incorrrectly answered a question.</p>
+<img src = '{{docroot}}/images//visa_wizard.gif' style='float:left;margin-right:20px;margin-top:0px;margin-bottom:10px;'> 
+<p>Cross River Software devised an easy-to-use, web-based application "wizard"
+that guides the applicant step-by-step through the application process. Each question is clearly explained and, based on the responses, 
+the applicant is told <i>exactly</i> what documents the Russian Consulate
+will need to process the application. Once the applicant submits an application to Complete Visa Services, he or she can log in at any
+time to check on the application's status or to make corrections.</p>
+<img src = '{{docroot}}/images/visa_admin2.gif' style='float:right;margin-left:20px;margin-top:0px;margin-bottom:10px;'> 
+<p>Cross River also designed a robust administrative interface that allows Complete Visa to check, at a glance,
+the status of every order and to print a daily list of action items. When all documents have been received for an application
+and the application is ready to be submitted
+to the Consulate for processing, CompleteVisa generates a printer-ready visa application in the format required
+by the Consulate.</p>
+<p>Using the administrative interface, Complete Visa Services can accept credit card payments, record key milestones in
+the application process, and communicate directly with each client. After every milestone, CompleteVisa automatically sends
+an email to the applicant to inform her of the status of her application.</p>
+<p>From the moment a user submits an application to the moment the completed visa is shipped to the customer, the
+CompleteVisa administrative module manages every step of the process.</p> 
+
+<div id="dialog-technical">
+<p>Complete Visa is a web-based application using PHP and MySQL on the server side. The application features a custom-designed payment-processing component and dynamic generation of specialized visa application forms.</p>
+</div>
+{% endblock %}

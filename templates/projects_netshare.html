@@ -1,0 +1,34 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'NetShare' %}
+
+{% block projectbody %}
+<img src = '{{docroot}}/images/netshare_sdcwalogo.gif' style='float:right;margin-left:30px;margin-right:30px;margin-bottom:20px;'/> 
+<p>The San Diego County Water Authority (SDCWA) is a public agency serving the San Diego region as 
+a wholesale supplier of water from the Colorado River and Northern California. The Water Authority works 
+through its 24 member agencies to provide a safe, reliable water supply to over three million county residents.</p>
+<img src = '{{docroot}}/images/netshare_overview.gif' style='float:left;margin-right:20px;margin-top:0px;margin-bottom:20px;'/> 
+<p>SDCWA sells water at wholesale rates to its member agencies to meet water demands that the agencies are not able to
+meet using their own, local supplies. Simply put, the Authority imports water from two major sources--the Colorado River Aqueduct and the Metropolitan Water
+District of Southern California--and distributes this water through a complex network of pipes and other hydraulic structures
+to its member agencies.</p>
+<p>In the past, the Authority charged each member agency the same rate for a unit of delivered water. This "postage stamp" rate
+structure ignored the fact that each member agency uses different parts of the Authority's facilities. An agency located near one
+of the Authority's intake points was charged the same rate as an agency that was at the terminus of an extensive network of pipes,
+canals and storage facilities.</p>
+<p>While such a pricing arrangement might very well be considered "equitable," the Authority was interested in examining how their
+pricing might change if they took into account exactly how much of their distribution system each agency was actually using. They
+could then use this information to better inform a debate over pricing.</p>
+<img src = '{{docroot}}/images/netshare_schematic3.gif' style='float:right;margin-left:20px;margin-top:0px;margin-bottom:20px;'/> 
+<p>We examined two fundamental approches to the problem of allocating network costs among member agencies: a) use the actual cost of each section of pipe or other asset used by the agency, or b) calculate a cost based on an "idealized" network that is perfectly optimized to meet
+each agency's peak demand requirements and no more. We opted for approach (b) on the premise that an agency should not be penalized
+for facilities the Authority built but that are not directly related to serving that agency.</p>
+<p>Cross River Software designed a special-purpose application
+called NetShare to model an idealized network in which the capacity of each segment is matched
+to the peak demand requirements of all users downstream of the segment. After determining these optimal capacities,
+NetShare calculates the diameter of each pipe segment based on the hydraulic characteristics of the system.</p>
+
+<div id="dialog-technical">
+<p>NetShare is a Windows desktop application written entirely in C++, with a custom-built graphics panel for visualizing the distribution network.</p>
+</div>
+
+{% endblock %}

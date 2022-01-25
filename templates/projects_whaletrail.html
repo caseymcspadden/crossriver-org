@@ -1,0 +1,26 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'The Whale Trail' %}
+
+{% block projectbody %}
+
+<img src = '{{docroot}}/images/whaletrail-logo.jpg' style='float:left;margin-left:30px;margin-right:30px;margin-bottom:10px;width:75px;'/> 
+<p>The Whale Trail is a Seattle-based nonprofit organization whose mission is to inspire appreciation and stewardship of whales and our marine environment by establishing a network of viewing sites along the whales’ trails through Puget Sound and the coastal waters of the Pacific Northwest.</p>
+<img src = '{{docroot}}/images/whaletrail_map.png' style='float:right;margin-left:30px;margin-right:30px;margin-bottom:10px;width:150px;'/> 
+<p>Under the direction of founder Donna Sandstrom, the Whale Trail is being created by a consortium of partners including NOAA Fisheries, Washington Dept of Fish and Wildlife, People For Puget Sound, Seattle Aquarium, Olympic Coast National Marine Sanctuary, and the Whale Museum.</p>
+<p>Cross River Software is working with The Whale Trail to develop a mobile application that will allow the public to report and share whale sightings using their smart devices. Features include:
+<ul class="whaletrail-features">
+<li>Automatic logging of geo-data and direction of travel</li>
+<li>Photos can be included in sighting reports</li>
+<li>Automatically share sightings on social media apps</li>
+<li>View recent nearby sightings</li>
+<li>Administrators can dynamically set various "management polygons" for special treatment (e.g. off-limits for sightings)</li>
+<li>An administrative back-end for generating reports and analyzing sighting statistics</li>
+</ul>
+</p>
+<p>We have developed a beta version of the app for the iPhone and have demonstrated it at NOAA's Regional Headquarters in Seattle. We are currently working on porting the application to other mobile platforms and hope to release the application to the public in the spring of 2014.</p>
+
+<div id="dialog-technical">
+<p>Beta version is written entirely in native Objective-C for iOS devices. Multi-platform development is being done using Appcelerator Titanium. Sightings are fetched and reported using a RESTful JSON web service. A web-based administrative backend allows authenticated administrators to view sighting statistics and individual sighting reports, to verify sightings, to create polygonal management zones, etc.</p>
+</div>
+
+{% endblock %}

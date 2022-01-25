@@ -1,0 +1,38 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'IRPSIM' %}
+
+{% block projectbody %}
+
+<img src = '{{docroot}}/images/irpsim_service_area.gif' style='float:right;margin-left:20px;margin-bottom:20px;'> 
+<p>The Metropolitan Water District of Southern California (MWD) is a
+consortium of 26 cities and water districts that provides drinking water to nearly 19 million people in parts of
+Los Angeles, Orange, San Diego, Riverside, San Bernardino and Ventura Counties. MWD currently delivers an average 
+of 1.7 billion gallons of water per day to its 5,200 square-mile service area. It is the largest supplier of treated water in the United States.</p>
+<p>During the mid-1990s, MWD and its member agencies embarked on a major new planning effort that represented
+a dramatic shift in the way they looked at water management. The focus of this process was
+to collectively examine all of the available resource options, both local and imported, together with conservation--in order
+to develop a least-cost plan that met the reliability and quality needs of the region. The result of this intensive effort
+was a 25-year <i>Integrated Resources Plan</i> (IRP) that offered a realistic means of achieving a reliable and affordable
+water supply well into this century.</p>
+<img src = '{{docroot}}/images/irpsim_shot1.gif' style='float:left;margin-right:20px;margin-bottom:20px;'> 
+<img src = '{{docroot}}/images/irpsim_shot2.gif' style='float:right;margin-left:20px;margin-bottom:20px;'> 
+<p>In order to meet the challenges of this new planning effort, Metropolitan needed specialized
+planning tools. Metropolitan funded the development of IRPSIM, a computer model that played a key role in the planning
+process and that continues to play a critical role in ongoing planning at MWD and elsewhere. At its heart, IRPSIM is a
+<i>simulation model</i> that evaluates the uncertainties associated with demands and supplies over a long time horizon.
+IRPSIM allows MWD to tie together different supply, demand, climate, hydrology, and demographic models to generate forecasts
+of water surpluses and shortages under different approaches to managing its vast storage and delivery system.</p>
+<p>As of 2013, Metropolitan continues to rely IRPSIM as the core engine to run its primary resource planning and sales forecasting models.</p>
+<p>Recently, Cross River partnered with DCSE, a software engineering firm near San Diego, to combine the IRPSIM model
+with a network optimization model designed by DCSE, to produce a powerful integrated tool that not only simulates water supply
+and demand, but also calculates the optimal means of allocating supplies and shortages under the constraints imposed by
+a complex distribution network. We are currently marketing the integrated tool to other western water agencies.</p>
+<div style="text-align:center;">
+<img src = '{{docroot}}/images/irpsim_shot3.gif' style="margin-top:20px;"> 
+</div>
+
+<div id="dialog-technical">
+<p>Originally a Windows desktop application written entirely in C++, the application has been ported to several operating platforms and languages, including UNIX/Sun/SPARC. The core processing "engine" of the tool has been ported to function as a COM server, and the UI has been rewritten in C# as a .NET WinForms application.</p>
+</div>
+
+{% endblock %}

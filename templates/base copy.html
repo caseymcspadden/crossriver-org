@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Cross River Software{% block title %}{% endblock %}</title>
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires" CONTENT="-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type = "text/css">
+	<link rel="stylesheet" href="{{docroot}}/style/default.css" type="text/css">
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/claro/claro.css" media="screen">
+  {% block style %}
+  {% endblock %}
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  {% block headscript %}
+  {% endblock %}
+</head>
+<body class="claro">
+<script src="{{docroot}}/dojo-release-1.9.1/dojo/dojo.js"></script>
+<div class="body">
+	<div id="CRDocument">
+		<div id="CRHeader">
+			<a href="{{docroot}}"><img src="{{docroot}}/images/logo.gif" alt="logo"/></a>
+			{% block header %}
+			{% endblock %}  
+		</div>
+		<div id="CRMainNav" class="CRNav">
+			<div class="CRFloatLeft">
+			<a href="{{docroot}}/projects">projects</a>
+			{% block admin_nav %}
+			{% endblock %}
+			</div>
+			<div class="CRFloatRight">
+			{% block nav %}
+			{% include "login.html" %}
+			{% endblock %}
+			</div>
+		</div>
+		<div style='clear:both;'></div>
+		<div id="CRBody">
+			{% block body %}
+			BODY
+			{% endblock %}  
+		</div>
+		<div id="CRFooter">
+			{% block footer %}
+			copyright 2013, Cross River Software
+			{% endblock %}
+		</div>
+	</div>
+</div>
+{% block bodyscript %}
+{% endblock %}
+</body>
+</html>

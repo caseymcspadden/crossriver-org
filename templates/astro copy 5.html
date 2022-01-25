@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block headscript %}
+<script src="{{docroot}}/scripts/Astro.js"></script>
+<script src="{{docroot}}/scripts/Matrix.js"></script>
+<script src="{{docroot}}/scripts/CanvasHelper.js"></script>
+<script src="{{docroot}}/scripts/WorldMap.js"></script>
+<script src="{{docroot}}/scripts/SolarSystem.js"></script>
+<script src="{{docroot}}/scripts/Planetarium.js"></script>
+
+<script>
+
+$(function () { 
+	$("#tabs").tabs();
+});
+
+
+// World Map functions
+$(window).load(function () {
+	
+	var worldMap = new WorldMap("earthCanvas","earthImage", function(date) {$("#current-date-map").val(date.toLocaleDateString()); $("#current-time-map").val(date.toLocaleTimeString());});
+	
+	$("#current-date-map").click(function(event) {
+		console.log(event);
+	});
+	
+	$("#animate-map").click(function(event) {
+		worldMap.setAnimate(event.currentTarget.checked);
+	});
+	
+	$("#fixed-map").click(function(event) {
+		worldMap.setFixedMap(event.currentTarget.checked);
+	});
+	
+	$("#reset-time-map").click(function() {
+		worldMap.resetTime();
+	});
+});
+
+// Solar System functions
+$(window).load(function () { 
+
+	var planets = {
+		"Sun" : {planet: new Sun(), color:"yellow", diameter:20, image: document.getElementById("planet-sun")},
+		"Moon" : {planet: new Moon(), color:"white", diameter:20, image: document.getElementById("planet-moon")},
+		"Mercury" : {planet: new Mercury(), color: "orange", diameter:20, image: document.getElementById("planet-mercury")}, 
+		"Venus" : {planet: new Venus(), color: "cyan", diameter:20, image: document.getElementById("planet-venus")},
+		"Earth" : {planet: new Earth(), color: "blue" , diameter:20, image: document.getElementById("planet-earth")},
+		"Mars" : {planet: new Mars(), color: "red" , diameter:20, image: document.getElementById("planet-mars")},
+		"Jupiter" : {planet: new Jupiter(), color: "violet" , diameter:20, image: document.getElementById("planet-jupiter")},
+		"Saturn" : {planet: new Saturn(), color: "green" , diameter:20, image: document.getElementById("planet-saturn")},
+		"Uranus" : {planet: new Uranus(), color: "brown" , diameter:20, image: document.getElementById("planet-uranus")},
+		"Neptune" : {planet: new Neptune(), color: "grey" , diameter:20, image: document.getElementById("planet-neptune")},
+		"Pluto" : {planet: new Pluto(), color: "black" , diameter:20, image: document.getElementById("planet-pluto")}
+	};
+	
+	var solarSystem = new SolarSystem("solarSystemCanvas", planets, function(date) {$("#current-time-solarsystem").val(date.toLocaleDateString());});
+	
+	$( "#zoom-solarsystem" ).slider({
+      orientation: "vertical",
+      min: 1,
+      max: 100,
+      slide: function( event, ui ) {
+      	solarSystem.setZoom(ui.value);
+      }
+    });
+    
+	$("#animate-solarsystem").click(function(event) {
+		solarSystem.setAnimate(event.currentTarget.checked);
+	});
+	
+	$("#reset-time-solarsystem").click(function() {
+		solarSystem.resetTime();
+	});
+
+	$("#reset-orientation-solarsystem").click(function() {
+		solarSystem.resetOrientation();
+	});
+	
+	$("#center-solarsystem").on("change",function(event) {
+		solarSystem.setCenterObject($("#center-solarsystem option").filter(":selected").val());
+	});
+});
+
+
+// Sky functions
+$(window).load(function () {
+
+	var planets = {
+		"Sun" : {planet: new Sun(), color:"yellow", diameter:20, image: document.getElementById("planet-sun")},
+		"Moon" : {planet: new Moon(), color:"white", diameter:20, image: document.getElementById("planet-moon")},
+		"Mercury" : {planet: new Mercury(), color: "orange", diameter:20, image: document.getElementById("planet-mercury")}, 
+		"Venus" : {planet: new Venus(), color: "cyan", diameter:20, image: document.getElementById("planet-venus")},
+		"Earth" : {planet: new Earth(), color: "blue" , diameter:20, image: document.getElementById("planet-earth")},
+		"Mars" : {planet: new Mars(), color: "red" , diameter:20, image: document.getElementById("planet-mars")},
+		"Jupiter" : {planet: new Jupiter(), color: "violet" , diameter:20, image: document.getElementById("planet-jupiter")},
+		"Saturn" : {planet: new Saturn(), color: "green" , diameter:20, image: document.getElementById("planet-saturn")},
+		"Uranus" : {planet: new Uranus(), color: "brown" , diameter:20, image: document.getElementById("planet-uranus")},
+		"Neptune" : {planet: new Neptune(), color: "grey" , diameter:20, image: document.getElementById("planet-neptune")},
+		"Pluto" : {planet: new Pluto(), color: "black" , diameter:20, image: document.getElementById("planet-pluto")}
+	};
+
+	var planetarium = new Planetarium("skyCanvas", "{{docroot}}/astronomy/stars", planets, 39, -94.5, function(date){$("#current-date-sky").val(date.toLocaleDateString()); $("#current-time-sky").val(date.toLocaleTimeString());});
+	
+	$("#animate-sky").click(function(event) {
+		planetarium.setAnimate(event.currentTarget.checked);
+	});
+	
+	$("#reset-time-sky").click(function() {
+		planetarium.resetTime();
+	});
+      	
+	$("#reset-orientation-sky").click(function() {
+		planetarium.resetOrientation();
+	});
+
+	$( "#zoom-sky" ).slider({
+      orientation: "vertical",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: function( event, ui ) {
+      	zoom = 1 + ui.value/10.0;
+      	planetarium.setZoom(zoom);
+      }
+    }).dblclick(function () {
+    	$( "#zoom-sky" ).slider("value",0);
+      planetarium.setZoom(1);
+    });    
+});
+
+</script>
+{% endblock %}
+
+{% block body %}
+
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-map">World Map</a></li>
+    <li><a href="#tabs-solarsystem">Solar System</a></li>
+    <li><a href="#tabs-sky">Sky</a></li>
+    <li><a href="#tabs-preferences">Preferences</a></li>
+  </ul>
+  <div id="tabs-map">
+  	<div style="height:30px;">
+		<div class="CRFloatLeft">
+		  <input type="checkbox" id="animate-map"/>Animate
+		  <input type="checkbox" id="fixed-map" checked="true"/>Stationary Map
+		  <button id="reset-time-map">reset time</button>
+		</div>
+		<div class="CRFloatRight"><input type="text" id="current-date-map" size="10"></input><input type="text" id="current-time-map" size="11"></input></div>
+  	</div>
+	<canvas id="earthCanvas" width="956" height="478"></canvas>
+
+
+  </div> <!-- <div id="tabs-map" -->
+  
+  <div id="tabs-solarsystem">
+  	<div style="height:30px;">
+ 		<div class="CRFloatLeft">
+		  <input type="checkbox" id="animate-solarsystem"/>Animate
+		  <button id="reset-time-solarsystem">reset time</button>
+		  <button id="reset-orientation-solarsystem">reset orientation</button>&nbsp;
+		  Center on
+		  <select id="center-solarsystem">
+			  <option name="Sun">Sun</option>
+			  <option name="Mercury">Mercury</option>
+			  <option name="Venus">Venus</option>
+			  <option name="Earth">Earth</option>
+			  <option name="Mars">Mars</option>
+			  <option name="Jupiter">Jupiter</option>
+			  <option name="Saturn">Saturn</option>
+			  <option name="Uranus">Uranus</option>
+			  <option name="Neptune">Neptune</option>
+			  <option name="Pluto">Pluto</option>
+		  </select>
+		</div>
+		<div class="CRFloatRight"><input type="text" id="current-time-solarsystem" size="11"></input></div>
+  	</div>
+  	<div style="height:500px;">
+  		<div class="CRFloatLeft">
+	  		<canvas id="solarSystemCanvas" width="900" height="478"></canvas>
+	  	</div>
+	  	<div class="CRFloatLeft">
+		  	<div id="zoom-solarsystem" style="height:478px;margin-left:20px;"></div>
+		</div>
+  	</div>
+  </div>
+  
+  <div id="tabs-sky">
+  	<div style="height:30px;">
+	 	<div class="CRFloatLeft">
+			<input type="checkbox" id="animate-sky"/>Animate
+			<button id="reset-time-sky">reset time</button>
+			<button id="reset-orientation-sky">reset orientation</button>
+		</div>
+		<div class="CRFloatRight"><input type="text" id="current-date-sky" size="10"></input><input type="text" id="current-time-sky" size="11"></input></div>
+  	</div>
+  	<div style="height:500px;">
+  		<div class="CRFloatLeft">
+  			<canvas id="skyCanvas" width="900" height="478"></canvas>
+  		</div>
+  		<div class="CRFloatLeft">
+   			<div id="zoom-sky" style="height:478px;margin-left:20px;"></div>
+  		</div>
+  	</div>
+  </div>
+  <div id="tabs-preferences">
+  <p>Preferences</p>
+  </div>
+</div>
+
+	<div class="CRHidden">
+		<img id="earthImage" src="./images/earth-map-1000x500.gif" alt="Earth Map"/> 	
+		<img id="planet-sun" src="./images/planet-sun.gif" alt="Planet"/>
+		<img id="planet-moon" src="./images/planet-moon.gif" alt="Planet"/>
+		<img id="planet-mercury" src="./images/planet-mercury.gif" alt="Planet"/>
+		<img id="planet-venus" src="./images/planet-venus.gif" alt="Planet"/>
+		<img id="planet-earth" src="./images/planet-earth.gif" alt="Planet"/>
+		<img id="planet-mars" src="./images/planet-mars.gif" alt="Planet"/>
+		<img id="planet-jupiter" src="./images/planet-jupiter.gif" alt="Planet"/>
+		<img id="planet-saturn" src="./images/planet-saturn.gif" alt="Planet"/>
+		<img id="planet-uranus" src="./images/planet-uranus.gif" alt="Planet"/>
+		<img id="planet-neptune" src="./images/planet-neptune.gif" alt="Planet"/>
+		<img id="planet-pluto" src="./images/planet-pluto.gif" alt="Planet"/>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+.dialogFrame
+{
+    width: 750px;
+    height: 350px;
+    overflow: hidden;
+    border: none;
+}
+
+.ui-autocomplete-loading 
+{
+	background: white url('../images/ajax-loading.gif') right center no-repeat;
+}
+
+div.demo {
+	height: 480px;
+}

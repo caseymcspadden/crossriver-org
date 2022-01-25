@@ -1,0 +1,30 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'GeoPatterns' %}
+
+{% block projectbody %}
+<img src = '{{docroot}}/images/geopatterns-capla2.png' style='float:right;margin-left:20px;margin-top:0px;margin-bottom:20px;width:350px;'> 
+<p>Research suggests the possibility that some ancient ceremonial sites were purposely located in carefully considered relationships
+to large-scale geometric patterns involving significant natural features such as mountains.</p>
+<p>Dr. Dennis Doxtater, a professor at the University of Arizona College of Architecture, Planning, and Landscape Architecture, 
+has found evidence of such patterns in his studies of ancient architecure in areas
+as diverse as Scandinavia, Crete, and Chaco Canyon in the US.</p> 
+<img src = '{{docroot}}/images/geopatterns-screenshot.png' style='float:left;margin-right:20px;margin-bottom:20px;width:450px;'> 
+<p>In examining these sites, Dr. Doxtater faced a daunting analytical problem: how to identify specific patterns--and combinations of patterns--among collections of
+built sites and natural landscape features, and how to assess the likelihood that such patterns were the result of design rather than chance.
+In addition to having to compute complex relationships among points on a spherical surface (the study areas are too large for
+flat-surface approximations to be valid), he had to be able to peform these calculations rapidly and repeatedly for ad-hoc
+collections of random site points.</p>
+<p>Professor Doxtater approached Cross River Software to design a solution to this problem. We 
+examined the possibility of using off-the-shelf software but were not able to find an application suitable for this task. General-purpose programs such as Excel (spreadsheet) or ArcInfo (GIS)
+would have been too difficult to adapt and/or too slow to process, test and display the extremely large number of pattern possibilities
+that exist among even a relatively small number of sites.</p>  
+<img src = '{{docroot}}/images/geopatterns-options.png' style='float:right;margin-left:20px;margin-top:20px;width:350px;'> 
+<p>We created a specialized Windows Forms-based application called <i>GeoPatterns</i> to meet Dr. Doxtater's unique requirements.
+GeoPatterns allows a user to choose among various types of geometric patterns--such as alignments and bisect relationships--and to
+combine these atomic patterns to form complex pattern combinations. GeoPatterns then tests these pattern templates against a set
+of geographically separated natural and man-made features to find matches.</p>
+
+<div id="dialog-technical">
+<p>GeoPatterns is a WinForms .NET application written in C# (a future version will use Windows Presentation Foundation for its UI). The UI features an interactive geographical map component that uses the open-source GMap.NET control.</p>
+</div>
+{% endblock %}

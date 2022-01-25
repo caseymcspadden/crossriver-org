@@ -1,0 +1,40 @@
+{% extends "projects_base.html" %}
+{% set project_name = 'focal_EVENT' %}
+
+{% block projectbody %}
+
+<img src = '{{docroot}}/images/focalevent_original.gif' style='float:right;margin-left:20px;margin-bottom:20px;'> 
+<p>In the spring of 2004, Cross River Software teamed with its design partner indego:MEDIA to found the company focal_EVENT for
+the purpose of developing an online, real-time system for booking meeting and conference space. We previewed a beta release of
+the application at the <i>Northwest Event Show</i> in September, 2004 to enthusiastic reviews.</p>
+<p>As we developed our product and business model, we explored the possibility of adapting and
+marketing our application to large offices as an in-house tool for booking meeting rooms and tracking resources.
+We approached one of the regional offices of American Express Financial Services (now Ameriprise Financial) and they
+immediately saw the potential of the software.</p>
+<img src = '{{docroot}}/images/focalevent_overview2.gif' style='float:left;margin-right:20px;margin-top:0px;margin-bottom:10px;'> 
+<p>Ameriprise provides meeting rooms and resources (projectors, laptops, etc.) for dozens of 
+financial advisors to meet with their clients. Since many of these advisors work outside and only use the main office for
+meetings, Ameriprise was constantly running into scheduling conflicts. They also had various booking and reporting requirements
+that made the customary software calendar tools--such as Outlook and Lotus Notes--impractical.</p> 
+<img src = '{{docroot}}/images/focalevent_book2.gif' style='float:right;margin-left:10px;margin-top:0px;margin-bottom:10px;'> 
+<p>Working closely with a group of advisors, we adapted our original concept to meet the needs of Ameriprise.
+The result is a feature-rich, web-based calendar tool that allows advisors to easily check the availability of rooms
+and to book them with the click of a mouse. The application also allows advisors to check out resources such
+as projectors and laptops, to invite attendees, to print out daily and weekly schedules, and to manage their
+meetings using an intuitive user interface.</p>
+<img src = '{{docroot}}/images/focalevent_mymeetings2.gif' style='float:left;margin-right:10px;margin-top:0px;margin-bottom:10px;'> 
+<p>On the administrative side, focal_EVENT makes it easy for a manager to monitor the status of rooms and resources,
+to generate reports on room usage and advisor bookings, and to perform a variety of other tasks that had previously
+been done manually. One such task--assigning "coaches" to cover the meetings of apprentice advisors--was a logistical
+nightmare that used to require hours of effort. Using focal_EVENT, a manager can assign available coaches to meetings
+in a matter of minutes.</p>
+<p>focal_EVENT has been used at Ameriprise offices throughout the Pacific Northwest.</p>
+<i style="display:center;">"focal_EVENT has allowed us to effectively manage our facility and streamline a once time-consuming process."</i>
+- David Hayashi, MMGO Ameriprise Financial Services
+
+<div id="dialog-technical">
+<p>Server-side: A MySQL database and PHP scripts generating HTML code and responding to AJAX requests.</p>
+<p>Client-side: JavaScript, making heavy use of AJAX to retrieve and submit meeting data.</p>
+</div>
+
+{% endblock %}

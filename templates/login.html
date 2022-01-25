@@ -1,0 +1,6 @@
+{% if user.isLoggedIn() %}
+	<a href="{{docroot}}/clients">{{user.getName()}}</a> 
+	<a href="{{docroot}}/?logout=1">logout</a>
+{% else %}
+	<a id="menu_login">login</a> 
+{% endif %}

@@ -1,0 +1,64 @@
+DEBUG - 2019-07-12T18:19:30+00:00 - id = 77
+DEBUG - 2019-07-12T18:19:30+00:00 - _METHOD = PUT
+DEBUG - 2019-07-12T18:19:30+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-12T18:19:30+00:00 - username = kmcspadden
+DEBUG - 2019-07-12T18:19:30+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-12T18:19:30+00:00 - idclient = 4
+DEBUG - 2019-07-12T18:19:30+00:00 - password = Kelly0619#
+DEBUG - 2019-07-12T18:19:30+00:00 - repeat_password = Kelly0619#
+DEBUG - 2019-07-12T18:19:30+00:00 - id = 77
+DEBUG - 2019-07-12T18:21:50+00:00 - id = 77
+DEBUG - 2019-07-12T18:21:50+00:00 - _METHOD = PUT
+DEBUG - 2019-07-12T18:21:50+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-12T18:21:50+00:00 - username = kmcspadden
+DEBUG - 2019-07-12T18:21:50+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-12T18:21:50+00:00 - idclient = 4
+DEBUG - 2019-07-12T18:21:50+00:00 - password = Kelly0619#
+DEBUG - 2019-07-12T18:21:50+00:00 - repeat_password = Kelly0619#
+DEBUG - 2019-07-12T18:21:50+00:00 - id = 77
+DEBUG - 2019-07-12T18:28:08+00:00 - id = 77
+DEBUG - 2019-07-12T18:28:08+00:00 - _METHOD = PUT
+DEBUG - 2019-07-12T18:28:08+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-12T18:28:08+00:00 - username = kmcspadden
+DEBUG - 2019-07-12T18:28:08+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-12T18:28:08+00:00 - idclient = 4
+DEBUG - 2019-07-12T18:28:08+00:00 - password = Kelly0619#
+DEBUG - 2019-07-12T18:28:08+00:00 - repeat_password = Kelly0619#
+DEBUG - 2019-07-12T18:28:08+00:00 - id = 77
+DEBUG - 2019-07-12T18:28:47+00:00 - id = 77
+DEBUG - 2019-07-12T18:28:47+00:00 - _METHOD = PUT
+DEBUG - 2019-07-12T18:28:47+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-12T18:28:47+00:00 - username = kmcspadden
+DEBUG - 2019-07-12T18:28:47+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-12T18:28:47+00:00 - idclient = 4
+DEBUG - 2019-07-12T18:28:47+00:00 - password = Kelly0619#
+DEBUG - 2019-07-12T18:28:47+00:00 - repeat_password = Kelly0619#
+DEBUG - 2019-07-12T18:28:47+00:00 - id = 77
+DEBUG - 2019-07-12T18:29:10+00:00 - id = 77
+DEBUG - 2019-07-12T18:29:10+00:00 - _METHOD = PUT
+DEBUG - 2019-07-12T18:29:10+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-12T18:29:10+00:00 - username = kmcspadden
+DEBUG - 2019-07-12T18:29:10+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-12T18:29:10+00:00 - idclient = 4
+DEBUG - 2019-07-12T18:29:10+00:00 - password = Kelly0619#
+DEBUG - 2019-07-12T18:29:10+00:00 - repeat_password = Kelly0619#
+DEBUG - 2019-07-12T18:29:10+00:00 - id = 77
+DEBUG - 2019-07-12T18:29:48+00:00 - id = 77
+DEBUG - 2019-07-12T18:29:48+00:00 - _METHOD = PUT
+DEBUG - 2019-07-12T18:29:48+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-12T18:29:48+00:00 - username = kmcspadden
+DEBUG - 2019-07-12T18:29:48+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-12T18:29:48+00:00 - idclient = 4
+DEBUG - 2019-07-12T18:29:48+00:00 - password = Kelly0619#
+DEBUG - 2019-07-12T18:29:48+00:00 - repeat_password = Kelly0619#
+DEBUG - 2019-07-12T18:29:48+00:00 - id = 77
+DEBUG - 2019-07-12T19:24:40+00:00 - Creating new User
+DEBUG - 2019-07-12T19:25:24+00:00 - Creating new User
+DEBUG - 2019-07-12T19:25:24+00:00 - ID = 0
+DEBUG - 2019-07-12T19:27:39+00:00 - Creating new User
+DEBUG - 2019-07-12T19:27:39+00:00 - ID = 80
+DEBUG - 2019-07-12T19:30:56+00:00 - PAYLOAD = {"intent":"sale","payer":{"payment_method":"credit_card","funding_instruments":[{"credit_card":{"first_name":"Joe","last_name":"Smith","type":"visa","number":"4037840059538491","expire_month":"3","expire_year":"2020","cvv2":"222","billing_address":{"country_code":"US","line1":"123 Main St","city":"Leawood","state":"KS","postal_code":"66206"}}}]},"transactions":[{"description":"Payment on invoices","amount":{"total":"10.00","currency":"USD"}}]}
+DEBUG - 2019-07-12T19:30:57+00:00 - PAYMENT DENIED
+DEBUG - 2019-07-12T19:31:26+00:00 - PAYLOAD = {"intent":"sale","payer":{"payment_method":"credit_card","funding_instruments":[{"credit_card":{"first_name":"Joe","last_name":"Smith","type":"visa","number":"4037840059538494","expire_month":"3","expire_year":"2020","cvv2":"222","billing_address":{"country_code":"US","line1":"123 Main St","city":"Leawood","state":"KS","postal_code":"66206"}}}]},"transactions":[{"description":"Payment on invoices","amount":{"total":"0.00","currency":"USD"}}]}
+DEBUG - 2019-07-12T19:31:27+00:00 - PAYMENT DENIED
+DEBUG - 2019-07-12T19:31:46+00:00 - PAYLOAD = {"intent":"sale","payer":{"payment_method":"credit_card","funding_instruments":[{"credit_card":{"first_name":"Joe","last_name":"Smith","type":"visa","number":"4037840059538494","expire_month":"3","expire_year":"2020","cvv2":"222","billing_address":{"country_code":"US","line1":"123 Main St","city":"Leawood","state":"KS","postal_code":"66206"}}}]},"transactions":[{"description":"Payment on invoices","amount":{"total":"10.00","currency":"USD"}}]}

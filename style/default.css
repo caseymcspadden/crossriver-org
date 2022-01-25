@@ -1,0 +1,264 @@
+body {
+	/* margin-top: 10px; */
+	/*margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+	position:relative;*/
+	margin-top: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #222;
+	font-size: 11pt;
+}
+
+.demos.ui-slider .ui-slider-handle {
+	width: 10px;
+	height: 10px;
+}
+
+img {
+	border:0;
+}
+
+textarea {
+	resize: none;
+}
+
+ul.projects li {
+	margin-bottom: 5px;
+}
+
+ul.projects li a {
+	color: #aaaaaa;
+}
+
+ul.projects li a:hover {
+  color: #f05c23;
+}
+
+.ui-autocomplete {
+    width: 400px;
+}
+
+#CRHeader {
+	width: 1000px;
+  height: 110px;
+  background-color: white;
+  z-index: 999;
+}
+
+#CRLogo {
+  height: 80px;
+  margin: 0 auto;
+}
+
+#CRLogo span {
+float:	right;
+}
+
+#CRMainNav {
+	width: 1000px;
+	height: 30px;
+}
+
+.CRMainMenu {
+	font-size: 18px;
+}
+
+.CRMenuBar a {
+   text-decoration: none;
+   padding: 4px 4px;
+   color: #aaaaaa;
+}
+
+.CRMenuBar a:hover {
+  color: #f05c23;
+}
+
+.CRMenuBar .CRSelected {
+  color: #f05c23;
+}
+
+.CRNav li a {
+   text-decoration: none;
+   padding: .1em .4em;
+   color: #aaaaaa;
+}
+
+.CRNav ul li a:hover {
+  color: #52a60d;
+}
+
+a.user {
+	font-size: 12px;
+}
+
+.CRMenu {
+	border-radius: 0px;
+	position: absolute;
+	border-top: 2px solid #384b9f;
+	overflow: hidden;
+}
+
+#CRMainNav span.CRFloatLeft li.selected a {color: #52a60d; font-weight: bold;}
+
+#CRHeaderPlaceholder {
+  height:110px;
+  width:1000px;
+ 	display: none;
+}
+
+#CRBody {
+	position: static;
+}
+
+.CRControlIcon {
+	display:inline-block;
+	vertical-align: middle;
+}
+
+div.CRBodyTitle {
+	color: #f05c23;
+	/* background-color: #384b9f; */
+	/* height: 80px; */
+	margin-top: 10px;
+	margin-bottom: 20px;
+	/* border-top: 2px solid #384b9f; */
+}
+
+.CRBodyTitle .main-title {
+	margin:0;
+	font-size:24px;
+	font-weight: normal;
+}
+
+.card-type {
+	 	background-image: url("../images/creditcards-lg.gif");
+	 	background-repeat: no-repeat;
+	 	display: inline-block;
+	 	width:292px;
+	 	height:42px;
+}
+
+.visa {background-position:0 -44px;}
+.mastercard {background-position:0 -88px;}
+.amex {background-position:0 -132px;}
+.discover {background-position:0 -176px;}
+
+th
+{
+	text-align: left;
+	background-color: #eeeeee;
+}
+
+#invoices table {
+	width: 100%;
+}
+
+#invoices tbody tr.inactive {
+	color: #aaaaaa;
+}
+
+#review td {
+	padding-right: 20px;
+}
+
+#CRWarning {
+	text-align: center;
+	background-color: #ffcccc;
+	font-weight: bold;
+}
+
+.CRSocialShare {
+	float: right;
+	margin-top: 10px;
+}
+
+#CRFooter
+{
+	text-align: center;
+	color: #aaa;
+	margin-top: 10px;
+	font-size: 10pt;
+}
+
+.CRFloatLeft {float: left;}
+
+.CRFloatRight {float: right;}
+
+.CRCustomDialogGroup {
+	margin-bottom: 20px;
+}
+
+div.CRHide {
+	display: none;
+	//visibility:hidden;
+	//height: 0px;
+}
+
+div.CRShow {
+	display: inherit;
+	//visibility:hidden;
+	//height: 0px;
+}
+
+#CRMainNav span.CRFloatLeft {position: relative; margin-top: 3px;}
+#CRMainNav span.CRFloatRight {position: relative; margin-top: 3px;}
+#CRMainNav li {float:left; padding:0; margin:0;}
+
+#CRNavPanel {position: relative; float: left; margin-top: 0px;}
+#CRNavPanel li {float:left; padding:0; margin:0;}
+
+.CRNav ul {list-style:none; margin:0; padding:0; font-size:10px; font-family: Verdana, Arial, Helvetica, sans-serif;}
+
+a {
+   text-decoration: none;
+   padding: 4px 4px;
+}
+
+a:hover {
+  color: #f05c23;
+}
+
+.CRBodyTitle a {
+   text-decoration: none;
+   padding: 4px 4px;
+   color: #384b9f;
+}
+
+.CRBodyTitle a:hover {
+  color: #f05c23;
+}
+
+#CRPlanControls {
+	margin-bottom: 5px;
+}
+
+.CRHidden {
+	display: none;
+}
+
+#summaryform table {
+	width:	auto;
+}
+
+#summaryform table td {
+	padding-right:	10px;
+}
+
+#summaryform table input {
+	border:	none;
+	font-size: 10px;
+	font-weight: bold;
+}
+
+.CRHeaderSelected {
+	background-color: #a2cb79;
+}
+
+
+.CRLogin {
+	text-align: center;
+}

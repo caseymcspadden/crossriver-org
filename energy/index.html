@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Wind Farms</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="/style/normalize-css/normalize.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="/style/leaflet/leaflet.css" />
+	<link rel="stylesheet" href="/style/jsTree/style.min.css" />
+	<link rel="stylesheet" href="/style/splitter/jquery.splitter.css" />
+	<link rel="stylesheet" href="/energy/style/lib/Control.MiniMap.css" />
+	<link rel="stylesheet" href="/energy/style/lib/L.Control.Sidebar.css" />
+	<link rel="stylesheet" href="/energy/style/Leaflet.zoomslider/L.Control.Zoomslider.css" />
+	<link rel="stylesheet" href="/energy/style/energy.css" />
+	<!--[if lt IE 9]><script src="http://static.jstree.com/3.0.0-beta8/assets/respond.js"></script><![endif]-->
+<script>  
+  var require = {
+	baseUrl: '/energy/js',
+
+  paths: {
+    jquery: 'lib/jquery-1.10.2.min',
+    jqueryui: 'lib/jquery-ui-1.10.3.custom',
+    jquerycookie: 'lib/jquery.cookie',
+    underscore: 'lib/underscore-min',
+    backbone: 'lib/backbone-1.1.2',
+    leaflet: 'lib/leaflet',
+    jstree: 'lib/jstree.min',
+	spin: 'lib/spin.min',
+	splitter: 'lib/jquery.splitter-0.8.0',
+	leaflet_markercluster: 'lib/leaflet.markercluster-src',
+	leaflet_spin: 'lib/leaflet.spin',
+	leaflet_sidebar: 'lib/L.Control.Sidebar',
+	leaflet_zoomslider: 'util/L.Control.Zoomslider',
+	leaflet_menu: 'util/L.Control.Menu',
+		//leaflet_minimap: 'lib/Control.MiniMap',
+    text: 'lib/text'
+  },
+  shim: {
+  	leaflet_markercluster: {
+	  	deps: ['leaflet']
+  	},
+  	leaflet_sidebar: {
+	  	deps: ['leaflet']
+  	},
+  	//leaflet_minimap: {
+	  	//deps: ['leaflet']
+  	//},
+  	leaflet_spin: {
+	  	deps: ['leaflet','spin']
+  	},
+    jqueryui: {
+	    deps: ['jquery']
+    },
+    splitter: {
+	    deps: ['jquery']
+    }
+
+  }
+}
+</script>
+<script data-main="/energy/js/main.js" src="/energy/js/lib/require.js"></script>
+</head>
+<body class="claro">
+<div id="main-view"></div>
+</body>
+</html>

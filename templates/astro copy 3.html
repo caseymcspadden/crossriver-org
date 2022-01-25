@@ -1,0 +1,863 @@
+{% extends "base.html" %}
+
+{% block headscript %}
+<script src="{{docroot}}/scripts/Astro.js"></script>
+<script src="{{docroot}}/scripts/Matrix.js"></script>
+<script src="{{docroot}}/scripts/CanvasHelper.js"></script>
+
+<script>
+
+$(function () { 
+	$("#tabs").tabs();
+	$("#dialog").dialog({
+      width: 400,
+      modal: true,
+      autoOpen: false
+    });
+});
+
+
+// World Map functions
+$(window).load(function () { 
+
+	var animate = false;
+	var fixedMap = true;
+
+	renderMap = function(ctx, img, d, astro, sun, moon)
+	{
+		ctx.globalAlpha = 1;
+		
+		var w = ctx.canvas.width;
+		var h = ctx.canvas.height;
+		
+		var iw = img.width;
+		var ih = img.height;
+				
+		var lst = astro.local_sidereal_time(d,0); // Local sidereal time ad longitiude 0
+		var rads = sun.GetRAandDec(d);  // right ascension and declination of sun
+		var radm = moon.GetRAandDec(d);  // right ascension and declination of moon
+		
+		var meridian = astro.mod180(rads.ra-lst);         // solar meridian
+		var lmoon = astro.mod180(radm.ra-lst);   // lunar meridian
+		
+		var screenLeft = (meridian >= 0 ? Math.round(w*meridian/360) :  Math.round(w/2 + w*(180+meridian)/360));
+		var pixelLeft = (meridian >= 0 ? Math.round(iw*meridian/360) :  Math.round(iw/2 + iw*(180+meridian)/360));
+
+		if (fixedMap)
+		{
+			ctx.drawImage(img,0,0,iw,ih,0,0,w,h);
+		}
+		else
+		{	
+			ctx.drawImage(img,pixelLeft,0,iw-pixelLeft,ih,0,0,w-screenLeft,h);
+			ctx.drawImage(img,0,0,pixelLeft,ih,w-screenLeft,0,screenLeft,h);
+		}
+				
+		// draw equator
+		
+		ctx.strokeStyle="#000000";
+
+		ctx.beginPath();
+		ctx.moveTo(0,h/2);
+		ctx.lineTo(w,h/2);
+		ctx.stroke();
+
+
+		// draw sun
+
+		ctx.strokeStyle="#FFFF00";
+		ctx.fillStyle="#FFFF00";
+	
+		var xCoord = (fixedMap ? w/2 + (w/2)*(meridian/180) : w/2);
+
+		ctx.beginPath();
+		ctx.moveTo(xCoord,0);
+		ctx.lineTo(xCoord,h);
+		ctx.stroke();
+	
+		ctx.beginPath();
+		ctx.arc(xCoord, h/2 - (h/2)*(rads.dec/90), 10, 0, 2*Math.PI);
+		ctx.fill();	
+		
+		// draw moon
+
+		ctx.strokeStyle="#FFFFFF";
+		ctx.fillStyle="#FFFFFF";
+		
+		xCoord = (fixedMap ? w/2 + (w/2)*(lmoon/180) : w/2 + (w/2)*astro.mod180(lmoon-meridian)/180);
+
+		ctx.beginPath();	
+		ctx.moveTo(xCoord,0);
+		ctx.lineTo(xCoord,h);
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.arc(xCoord, h/2 - (h/2)*(radm.dec/90), 10, 0, 2*Math.PI);
+		ctx.fill();	
+		
+		// draw day/night
+		
+		ctx.globalAlpha = 0.6;
+		ctx.fillStyle="#000000";
+
+		var tandec = astro.tand(-rads.dec); // tangent of sun's declimation
+	
+		for (var i=0; i<w ; i+=2)
+		{
+			var delta = (fixedMap ? meridian - (-180 + 360.0*(i/w)) : -180 + 360.0*(i/w));                  // degrees from meridiam
+			var latnight = astro.atand(astro.cosd(delta)/tandec);
+			if (rads.dec>0)
+				ctx.fillRect(i, h/2 - h/2*(latnight/90), 2, h/2 + (h/2)*(latnight/90));
+			else
+				ctx.fillRect(i, 0, 2, h/2 - (h/2)*(latnight/90));
+		}
+				
+	}
+	
+	var c=document.getElementById("earthCanvas");
+
+	var ctx=c.getContext("2d");
+	var img=document.getElementById("earthImage");
+	var astro = new Astro();
+	var sun = new Sun();
+	var moon = new Moon();
+	
+	var utc = astro.getUTC();
+	var dateLocal = new Date();
+	var d0 = astro.date_to_day(utc);
+	var deltaT = 0;
+	
+	var canvas2 = document.createElement('canvas');
+	canvas2.width = c.width;
+	canvas2.height = c.height;
+	var ctx2 = canvas2.getContext('2d');
+
+	
+	var displayTime = function() {
+		var date = new Date(dateLocal.getTime() + 24*deltaT*3600*1000);
+		$("#currentTime").html(date.toLocaleString());
+	}	
+	
+	var animateMap = function()
+	{
+		renderMap(ctx2, img, d0 + deltaT, astro, sun, moon);
+		ctx.drawImage(canvas2, 0, 0);
+		displayTime();
+		deltaT += 1/1440.0;
+		if (animate)
+			setTimeout(animateMap,20);
+	}
+	
+	$("#cbAnimate").click(function(event) {
+		animate = event.currentTarget.checked;
+		if (animate)
+		{
+			animateMap();
+		}
+	});
+	
+	$("#cbFixedMap").click(function(event) {
+		fixedMap = event.currentTarget.checked;
+		if (!animate) 
+			animateMap();
+	});
+	
+	$("#resetTime").click(function() {
+		deltaT=0;
+		utc=astro.getUTC();
+		dateLocal = new Date();
+		displayTime();
+		if (!animate) 
+			animateMap();
+	});
+	
+	animateMap();
+});
+
+// Solar System functions
+$(window).load(function () { 
+
+	var planets = {
+		"Sun" : {planet: new Sun(), color:"yellow", diameter:20, image: document.getElementById("planet-sun")},
+		"Mercury" : {planet: new Mercury(), color: "orange", diameter:20, image: document.getElementById("planet-mercury")}, 
+		"Venus" : {planet: new Venus(), color: "cyan", diameter:20, image: document.getElementById("planet-venus")},
+		"Earth" : {planet: new Earth(), color: "blue" , diameter:20, image: document.getElementById("planet-earth")},
+		"Mars" : {planet: new Mars(), color: "red" , diameter:20, image: document.getElementById("planet-mars")},
+		"Jupiter" : {planet: new Jupiter(), color: "violet" , diameter:20, image: document.getElementById("planet-jupiter")},
+		"Saturn" : {planet: new Saturn(), color: "green" , diameter:20, image: document.getElementById("planet-saturn")},
+		"Uranus" : {planet: new Uranus(), color: "brown" , diameter:20, image: document.getElementById("planet-uranus")},
+		"Neptune" : {planet: new Neptune(), color: "grey" , diameter:20, image: document.getElementById("planet-neptune")},
+		"Pluto" : {planet: new Pluto(), color: "black" , diameter:20, image: document.getElementById("planet-pluto")}
+	};
+	
+	var zAngle=0;
+	var xAngle=0;
+	var zAngle0=0;
+	var xAngle0=0;
+	
+	var I = new Matrix4(true);
+	var matrix = I.projection(10,1,-30,30);
+
+	var astro = new Astro();
+	var sun = new Sun();
+	var moon = new Moon();
+	
+	var utc = astro.getUTC();
+	var d0 = astro.date_to_day(utc);
+	var d = d0;
+	var deltaT = 0;
+	var dateLocal = new Date();
+
+	var c=document.getElementById("solarSystemCanvas");
+	var ctx=c.getContext("2d");
+
+	var width = ctx.canvas.width;
+	var height = ctx.canvas.height;
+	
+	var maxA = 35;
+	
+	var canvas2 = document.createElement('canvas');
+	canvas2.width = c.width;
+	canvas2.height = c.height;
+	var ctx2 = canvas2.getContext('2d');
+	var animate = false;
+
+	var helper = new CanvasHelper("solarSystemCanvas");
+	helper.drag = function(data) {
+		if (data.beginDrag)
+		{
+			zAngle0 = zAngle;
+			xAngle0 = xAngle;
+		}
+		zAngle = zAngle0 - data.deltaX;
+		xAngle = xAngle0 + data.deltaY; 
+		matrix = I.rotate(2,zAngle).rotate(0,xAngle).projection(10,1,-30,30);
+		if (!animate)
+			animateSolarSystem();
+	}
+	
+	var displayTime = function() {
+		var date = new Date(dateLocal.getTime() + 24*deltaT*3600*1000);
+		$("#currentTimeSolarSystem").html(date.toLocaleDateString());
+	}	
+	
+	var renderPlanet = function(p, ctx, d, width, height, maxA)
+	{
+		var oldStyle = ctx.strokeStyle;
+		ctx.strokeStyle = "white";
+	
+		var period = p.planet.GetPeriod(d) * astro.DAYSINYEAR;
+		var maxP = Math.min(width,height)/2;
+		
+		ctx.beginPath();
+		for (var i=0;i<=360;i+=2)
+		{
+			var dval = d + i * period / 360;			
+			var coords = p.planet.GetRectangularCoordinates(dval);
+			coords.w = 1;
+			var projected = matrix.vecMult(coords);
+			var x = width/2 + ((projected.x/projected.z) / maxA) * maxP;
+			var y = height/2 - ((projected.y/projected.z) / maxA) * maxP;
+			if (i==0)
+				ctx.moveTo(x,y);
+			else
+				ctx.lineTo(x,y);
+		}
+		ctx.stroke();	
+		
+		var coords = p.planet.GetRectangularCoordinates(d);
+		coords.w = 1;
+		var projected = matrix.vecMult(coords);
+		
+		var x = width/2 + ((projected.x/projected.z) / maxA) * maxP;
+		var y = height/2 - ((projected.y/projected.z) / maxA) * maxP;
+
+		var diam = Math.round(10 + 10*(35-maxA)/35); 
+		
+		ctx.drawImage(p.image,0,0,94,94,x-diam/2,y-diam/2,diam,diam);
+
+		ctx.strokeStyle = oldStyle;
+	}
+
+	var animateSolarSystem = function()
+	{
+		//var p = [new Mercury(), new Venus(), new Earth(), new Mars(), new Jupiter(), new Saturn(), new Uranus(), new Neptune(), new Pluto()];
+		
+		//ctx.fillStyle = "black";
+		ctx2.fillStyle = "black";
+		
+		ctx2.fillRect(0,0,width,height);
+		//ctx.fillRect(0,0,width,height);
+	
+	
+		var diam = Math.round(10 + 10*(35-maxA)/35); 
+		ctx2.drawImage(planets["Sun"].image,0,0,94,94,(width-diam)/2,(height-diam)/2,diam,diam);
+			
+		for (name in planets)
+		{
+			if (name=="Sun")
+				continue;
+			var p = planets[name];
+			renderPlanet(p,ctx2,d+deltaT,width,height,maxA);
+		}
+		
+		ctx.drawImage(canvas2, 0, 0);
+		
+		displayTime();
+		
+		if (animate)
+		{
+			deltaT += 1;
+			setTimeout(animateSolarSystem,40);
+		}
+	}
+	
+	animateSolarSystem();
+	
+	$( "#sliderZoom" ).slider({
+      orientation: "vertical",
+      min: 0,
+      max: 34,
+      slide: function( event, ui ) {
+        maxA = 35-ui.value;
+        if (!animate) 
+			animateSolarSystem();
+      }
+    });	
+	
+	$("#cbAnimateSolarSystem").click(function(event) {
+		animate = event.currentTarget.checked;
+		if (animate)
+		{
+			animateSolarSystem();
+		}
+	});
+	
+	$("#resetTimeSolarSystem").click(function() {
+		deltaT=0;
+		utc=astro.getUTC();
+		dateLocal = new Date();
+		displayTime();
+		if (!animate) 
+			animateSolarSystem();
+	});
+});
+
+
+// Sky functions
+$(window).load(function () {
+
+	var astro = new Astro();
+	
+	var planets = {
+		"Sun" : {planet: new Sun(), color:"yellow", diameter:20, image: document.getElementById("planet-sun")},
+		"Moon" : {planet: new Moon(), color:"white", diameter:20, image: document.getElementById("planet-moon")},
+		"Mercury" : {planet: new Mercury(), color: "orange", diameter:20, image: document.getElementById("planet-mercury")}, 
+		"Venus" : {planet: new Venus(), color: "cyan", diameter:20, image: document.getElementById("planet-venus")},
+		"Earth" : {planet: new Earth(), color: "blue" , diameter:20, image: document.getElementById("planet-earth")},
+		"Mars" : {planet: new Mars(), color: "red" , diameter:20, image: document.getElementById("planet-mars")},
+		"Jupiter" : {planet: new Jupiter(), color: "violet" , diameter:20, image: document.getElementById("planet-jupiter")},
+		"Saturn" : {planet: new Saturn(), color: "green" , diameter:20, image: document.getElementById("planet-saturn")},
+		"Uranus" : {planet: new Uranus(), color: "brown" , diameter:20, image: document.getElementById("planet-uranus")},
+		"Neptune" : {planet: new Neptune(), color: "grey" , diameter:20, image: document.getElementById("planet-neptune")},
+		"Pluto" : {planet: new Pluto(), color: "black" , diameter:20, image: document.getElementById("planet-pluto")}
+	};	
+	
+	var starColors = {
+		'O': "rgb(200,200,255)",
+		'B': "rgb(225,225,255)",
+		'A': "rgb(240,240,255)",
+		'F': "rgb(255,255,255)",
+		'G': "rgb(255,255,200)",
+		'K': "rgb(255,229,137)",
+		'M': "rgb(255,155,128)"
+	};
+
+	var c=document.getElementById("skyCanvas");
+	var ctx=c.getContext("2d");
+	
+	var canvas2 = document.createElement('canvas');
+	canvas2.width = c.width;
+	canvas2.height = c.height;
+	var ctx2 = canvas2.getContext('2d');
+	ctx2.font="10px Arial";
+	
+	
+	var width = ctx.canvas.width;
+	var height = ctx.canvas.height;
+	var radius = Math.min(width,height)/2 - 10;
+		
+	//ctx.fillStyle = "black";
+	//ctx.beginPath();
+	//ctx.arc(width/2, height/2, radius, 0, 2*Math.PI);
+	//ctx.fill();	
+
+	var utc = astro.getUTC();
+	var d = astro.date_to_day(utc);
+	var dateLocal = new Date();
+	
+	var lon = -94.5;
+	var lat = 39;
+	
+	var lst = astro.local_sidereal_time(d,lon); // Local sidereal time ad longitiude 0	
+	
+	var hms = astro.deg_to_hms(lst);
+	
+	var I = new Matrix(true);
+	
+	var deltaAlt0 = 0;
+	var deltaAz0 = 0;
+	var deltaAz = 0;
+	var deltaAlt = 0;
+	var deltaT = 0;
+	var zoom = 1;
+    
+	var matrix = I.rotate(2,lst).rotate(1,90-lat);
+	var stars = null;
+  
+	var animate=false;
+	
+	var helper = new CanvasHelper("skyCanvas");
+	helper.drag = function(data) {
+		if (data.beginDrag)
+		{
+			deltaAlt0 = deltaAlt;
+			deltaAz0 = deltaAz;
+		}
+		change_viewer_orientation(deltaAlt0 - 360 * data.deltaY/(2*radius*zoom), deltaAz0 + 360 * data.deltaX/(2*radius*zoom), null);
+	}
+	
+	helper.click = function(data)
+	{
+ 		for (name in planets)
+		{
+			var item = planets[name];
+			if (Math.abs(data.X-item.plotX)<item.diameter/2 && Math.abs(data.Y-item.plotY)<item.diameter/2)
+			{
+				var html = "<p>" + name + "</p>";
+				$("#dialog").html(html).dialog("option","title",name);
+				$("#dialog").dialog("open");
+				return true;	
+			}
+		}
+
+		var found = null;
+		for (var i=0;i<stars.length;i++) {
+			var item = stars[i];
+			if (Math.abs(data.X-item.plotX)<3 && Math.abs(data.Y-item.plotY)<3)
+			{
+				found=item;
+				break;
+			}
+		}
+		if (found != null)
+		{
+			var html = "";
+			for (key in found)
+				html += "<p>" + key + ": " + found[key] + "</p>";
+			$("#dialog").html(html).dialog("option","title",found.name);
+			$("#dialog").dialog("open");
+		}
+		return (found!=null)
+	}
+
+	var coords_to_display = function(latLon)
+	{
+		var ret = {};
+		var r = zoom * (radius)*(90-latLon.lat)/90;
+		ret.x = Math.round(width/2 - r*astro.sind(latLon.lon));
+		ret.y = Math.round(height/2 + r*astro.cosd(latLon.lon));
+		
+		return ret;
+	}
+	
+	var displayTime = function() {
+		var date = new Date(dateLocal.getTime() + 24*deltaT*3600*1000);
+		$("#currentTimeSky").html(date.toLocaleString());
+	}	
+    
+	var render_item = function(context,item,x,y)
+	{
+		var oldFill = context.fillStyle;
+	
+	    var d= Math.ceil(6*(8-item.mag)/9.5);
+	    context.globalAlpha = 0.5 + 0.5*(8-item.mag)/9.5;
+	    
+	    var cls = item.class.length==0 ? 'F' : item.class[0].toUpperCase();
+	    context.fillStyle = starColors[cls];
+	    		
+		context.beginPath();
+		context.arc(x, y, d/2, 0, 2*Math.PI);
+		context.fill();
+
+		context.fillStyle = oldFill;
+		context.globalAlpha = 1;
+		
+		if (item.mag<=2.5)
+		{
+			context.fillText(item.name, x, y);
+		}
+	}
+	
+	var render_planets = function(context)
+	{
+		for (name in planets)
+		{
+			if (name=="Earth")
+				continue;
+			var item = planets[name];
+			var planet = item.planet;
+			var spherical = planet.GetRAandDec(d);
+			var vec = astro.spherical_to_rectangular(spherical);
+			var coords = matrix.vecMult(vec);
+			if (coords.z>0)
+			{
+				var latLon = astro.rectangular_to_spherical(coords);
+				var plot = coords_to_display(latLon);
+				item.plotX = plot.x;
+				item.plotY = plot.y;
+				context.drawImage(item.image,0,0,94,94,plot.x-item.diameter/2,plot.y-item.diameter/2,item.diameter,item.diameter);
+			}
+		}
+	}
+	
+	var draw_horizon = function(context)
+	{
+		var oldFill = context.fillStyle;
+		var oldStroke = context.strokeStyle;
+		var tilt = I.rotate(1,deltaAlt);
+		var vec = {};
+		var init = false;
+
+ 		context.fillStyle="red";
+ 		context.strokeStyle="red";
+
+		context.beginPath();
+		for (var i=0;i<=360;i++)
+		{
+	  		vec.y = astro.cosd(i);
+	  		vec.x = astro.sind(i);
+	  		vec.z = 0;
+	  		var coords = tilt.vecMult(vec);
+	  		if (coords.z>0)
+	  		{
+				var latLon = astro.rectangular_to_spherical(coords);
+				var plot = coords_to_display(latLon);
+				if (!init)
+				{ 
+					context.moveTo(plot.x,plot.y);
+					init = true;
+				}
+				else
+					context.lineTo(plot.x,plot.y);
+
+				if (astro.mod360(i-deltaAz)==0) context.fillText("E",plot.x,plot.y);	
+				if (astro.mod360(i-deltaAz)==90) context.fillText("S",plot.x,plot.y);	
+				if (astro.mod360(i-deltaAz)==180) context.fillText("W",plot.x,plot.y);	
+				if (astro.mod360(i-deltaAz)==270) context.fillText("N",plot.x,plot.y);	
+					
+			}
+		}
+		context.stroke();
+ 		context.fillStyle=oldFill;
+ 		context.strokeStyle=oldStroke;
+	}
+		
+	var draw_ecliptic = function(context)
+	{
+		var M = I.rotate(0,-astro.earth_obliquity(d+deltaT)).rotate(2,lst).rotate(1,90-lat).rotate(2,deltaAz).rotate(1,deltaAlt);
+		var oldStroke = context.strokeStyle;
+ 		context.strokeStyle="blue";
+		
+		var vec = {};
+		var init = false;
+		
+		for (var i=0;i<=360;i++)
+		{
+	  		vec.x = astro.cosd(i);
+	  		vec.y = astro.sind(i);
+	  		vec.z = 0;
+	  		var coords = M.vecMult(vec);
+	  		if (coords.z>0)
+	  		{
+				var latLon = astro.rectangular_to_spherical(coords);
+				var plot = coords_to_display(latLon);
+				if (!init)
+				{ 
+					context.beginPath();
+					context.moveTo(plot.x,plot.y);
+					init = true;
+				}
+				else
+					context.lineTo(plot.x,plot.y);
+			}
+			else if (init)
+			{
+				context.stroke();
+				init=false;
+			}
+		}
+		if (init)
+			context.stroke();
+ 		context.strokeStyle=oldStroke;
+	}
+	
+	var draw_ra_dec = function(context)
+	{
+		var oldStroke = context.strokeStyle;
+ 		context.strokeStyle="white";
+
+		for (var ra=0; ra<360; ra+=30)
+		{
+			var sinra = astro.sind(ra);
+			var cosra = astro.cosd(ra);
+			var init=false;
+			for (var dec=-85;dec<=80;dec+=5)
+			{
+				var sindec = astro.sind(dec);
+				var cosdec = astro.cosd(dec);			
+				var vec = {x:cosdec*cosra, y:cosdec*sinra, z:sindec};
+				var coords = matrix.vecMult(vec);
+				if (coords.z>0)
+				{
+					var latLon = astro.rectangular_to_spherical(coords);
+					var plot = coords_to_display(latLon);
+					if (!init)
+					{ 
+						context.beginPath();
+						context.moveTo(plot.x,plot.y);
+						init = true;
+					}
+					else
+						context.lineTo(plot.x,plot.y);
+				}
+				else if (init)
+				{
+					context.stroke();
+					init=false;
+				}
+			}
+			if (init)
+				context.stroke();
+		}
+		
+		for (var dec=-60; dec<=60; dec+=30)
+		{
+			var sindec = astro.sind(dec);
+			var cosdec = astro.cosd(dec);			
+			var init=false;
+			for (var ra=0; ra<=360; ra+=10)
+			{
+				var sinra = astro.sind(ra);
+				var cosra = astro.cosd(ra);
+				var vec = {x:cosdec*cosra, y:cosdec*sinra, z:sindec};
+				var coords = matrix.vecMult(vec);
+				if (coords.z>0)
+				{
+					var latLon = astro.rectangular_to_spherical(coords);
+					var plot = coords_to_display(latLon);
+					if (!init)
+					{ 
+						context.beginPath();
+						context.moveTo(plot.x,plot.y);
+						init = true;
+					}
+					else
+						context.lineTo(plot.x,plot.y);
+				}
+				else if (init)
+				{
+					context.stroke();
+					init=false;
+				}				
+			}
+			if (init)
+				context.stroke();
+		}
+		context.strokeStyle=oldStroke;
+	}
+    
+	var animateSky = function()
+	{
+		ctx2.fillStyle="black";
+  		ctx2.fillRect(0,0,width,height);  
+	  	ctx2.fillStyle="white";
+  		ctx2.strokeStyle = "white";
+
+  		draw_horizon(ctx2);
+  		draw_ecliptic(ctx2);
+  		draw_ra_dec(ctx2);
+ 	
+  	
+		$.each(stars, function(i,item) {
+			if (item.mag <= 5)
+			{			
+				var coords = matrix.vecMult(item);
+			
+				if (coords.z>0)
+				{
+					var latLon = astro.rectangular_to_spherical(coords);
+					var plot = coords_to_display(latLon);
+					//var plot = coords_to_display(coords);
+					item.plotX = plot.x;
+					item.plotY = plot.y;
+					render_item(ctx2,item,plot.x,plot.y)
+				}
+			}		
+		});
+		
+		render_planets(ctx2);
+		
+		ctx.drawImage(canvas2, 0, 0);
+		displayTime();
+		
+		if (animate)
+		{
+			deltaT += 1/1440.0;
+			lst = astro.local_sidereal_time(d+deltaT,lon); // Local sidereal time ad longitiude 0	
+			matrix = I.rotate(2,lst).rotate(1,90-lat).rotate(2,deltaAz).rotate(1,deltaAlt); 			
+			setTimeout(animateSky,50);
+		}
+	}
+
+	$.ajax({
+		dataType: "json",
+		url: "{{docroot}}/astronomy/stars"
+	}).done(function (data) {
+		stars = data;
+		animateSky();
+	});
+
+	$("#cbAnimateSky").click(function(event) {
+		animate = event.currentTarget.checked;
+		if (animate)
+		{
+			animateSky();
+		}
+	});
+	
+	var change_viewer_orientation = function(alt,az,z)
+	{	
+		deltaAlt = (alt==null ? deltaAlt : astro.mod90(alt));
+		deltaAz  = (az==null ? deltaAz : astro.mod360(az));
+		zoom  = (z==null ? zoom : z);
+      	matrix = I.rotate(2,lst).rotate(1,90-lat).rotate(2,deltaAz).rotate(1,deltaAlt);
+      	if (!animate)
+      		animateSky();		
+	}
+	
+	$("#resetTimeSky").click(function() {
+		deltaT=0;
+		utc=astro.getUTC();
+		d = astro.date_to_day(utc);
+		lst = astro.local_sidereal_time(d,lon); // Local sidereal time ad longitiude 0	
+		matrix = I.rotate(2,lst).rotate(1,90-lat).rotate(2,deltaAz).rotate(1,deltaAlt);
+		dateLocal = new Date();
+		displayTime();
+		if (!animate) 
+			animateSky();
+	});
+      	
+	$("#resetOrientationSky").click(function() {
+		$( "#slider-zoom" ).slider("value",0);
+		change_viewer_orientation(0,0,1);
+	});
+
+	$( "#slider-zoom" ).slider({
+      orientation: "vertical",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: function( event, ui ) {
+      	zoom = 1 + ui.value/10.0;
+      	if (!animate)
+      		animateSky();
+      }
+    }).dblclick(function () {
+    	$( "#slider-zoom" ).slider("value",0);
+    	change_viewer_orientation(null,null,1);
+    });    
+});
+
+</script>
+{% endblock %}
+
+{% block body %}
+
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-map">World Map</a></li>
+    <li><a href="#tabs-solarsystem">Solar System</a></li>
+    <li><a href="#tabs-sky">Sky</a></li>
+  </ul>
+  <div id="tabs-map">
+  	<div style="height:30px;">
+		<div class="CRFloatLeft">
+		  <input type="checkbox" id="cbAnimate"/>Animate
+		  <input type="checkbox" id="cbFixedMap" checked="true"/>Stationary Map
+		  <button id="resetTime">reset time</button>
+		</div>
+		<div class="CRFloatRight"><span id="currentTime"></span></div>
+  	</div>
+	<canvas id="earthCanvas" width="956" height="478"></canvas>
+
+
+  </div> <!-- <div id="tabs-map" -->
+  
+  <div id="tabs-solarsystem">
+  	<div style="height:30px;">
+ 		<div class="CRFloatLeft">
+		  <input type="checkbox" id="cbAnimateSolarSystem"/>Animate
+		  <button id="resetTimeSolarSystem">reset time</button>
+		</div>
+		<div class="CRFloatRight"><span id="currentTimeSolarSystem"></span></div>
+  	</div>
+  	<div style="height:500px;">
+  		<div class="CRFloatLeft">
+	  		<canvas id="solarSystemCanvas" width="900" height="478"></canvas>
+	  	</div>
+	  	<div class="CRFloatLeft">
+		  	<div id="sliderZoom" style="height:478px;margin-left:20px;"></div>
+		</div>
+  	</div>
+  </div>
+  
+  <div id="tabs-sky">
+  	<div style="height:30px;">
+	 	<div class="CRFloatLeft">
+			<input type="checkbox" id="cbAnimateSky"/>Animate
+			<button id="resetTimeSky">reset time</button>
+			<button id="resetOrientationSky">reset orientation</button>
+		</div>
+		<div class="CRFloatRight"><span id="currentTimeSky"></span></div>
+  	</div>
+  	<div style="height:500px;">
+  		<div class="CRFloatLeft">
+  			<canvas id="skyCanvas" width="900" height="478"></canvas>
+  		</div>
+  		<div class="CRFloatLeft">
+   			<div id="slider-zoom" style="height:478px;margin-left:20px;"></div>
+  		</div>
+  	</div>
+  </div>
+</div>
+
+	<div class="CRHidden">
+		<img id="earthImage" src="./images/earth-map-1000x500.gif" alt="Earth Map"/> 	
+		<img id="planet-sun" src="./images/planet-sun.gif" alt="Planet"/>
+		<img id="planet-moon" src="./images/planet-moon.gif" alt="Planet"/>
+		<img id="planet-mercury" src="./images/planet-mercury.gif" alt="Planet"/>
+		<img id="planet-venus" src="./images/planet-venus.gif" alt="Planet"/>
+		<img id="planet-earth" src="./images/planet-earth.gif" alt="Planet"/>
+		<img id="planet-mars" src="./images/planet-mars.gif" alt="Planet"/>
+		<img id="planet-jupiter" src="./images/planet-jupiter.gif" alt="Planet"/>
+		<img id="planet-saturn" src="./images/planet-saturn.gif" alt="Planet"/>
+		<img id="planet-uranus" src="./images/planet-uranus.gif" alt="Planet"/>
+		<img id="planet-neptune" src="./images/planet-neptune.gif" alt="Planet"/>
+		<img id="planet-pluto" src="./images/planet-pluto.gif" alt="Planet"/>
+	</div>
+	
+<div id="dialog"></div>
+
+{% endblock %}

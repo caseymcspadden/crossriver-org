@@ -1,0 +1,10 @@
+DEBUG - 2019-07-15T15:24:50+00:00 - id = 77
+DEBUG - 2019-07-15T15:24:50+00:00 - _METHOD = PUT
+DEBUG - 2019-07-15T15:24:50+00:00 - name = Kelly McSpadden
+DEBUG - 2019-07-15T15:24:50+00:00 - username = kmcspadden
+DEBUG - 2019-07-15T15:24:50+00:00 - email = unclekaya1@gmail.com
+DEBUG - 2019-07-15T15:24:50+00:00 - idclient = 4
+DEBUG - 2019-07-15T15:24:50+00:00 - password = kelly0619#
+DEBUG - 2019-07-15T15:24:50+00:00 - repeat_password = kelly0619#
+DEBUG - 2019-07-15T15:24:50+00:00 - id = 77
+DEBUG - 2019-07-15T15:27:11+00:00 - PAYLOAD = {"intent":"sale","payer":{"payment_method":"credit_card","funding_instruments":[{"credit_card":{"first_name":"Kelly","last_name":"McSpadden","type":"discover","number":"6011000056516994","expire_month":"8","expire_year":"2020","cvv2":"566","billing_address":{"country_code":"US","line1":"27071 Sea Vista Dr","city":"Malibu","state":"CA","postal_code":"90265"}}}]},"transactions":[{"description":"Payment on invoices","amount":{"total":"4000.00","currency":"USD"}}]}
